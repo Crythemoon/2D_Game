@@ -2,11 +2,13 @@ import arcade
 from PIL import Image
 import numpy
 import asyncio
+import os
+import sys
 
-display = arcade.get_display_size
+DISPLAY = arcade.get_display_size
 
 def scale(s,x):
-    return display(1)[1] / (s*x)
+    return DISPLAY(1)[1] / (s*x)
 
 async def image_size(path):
     im = Image.open(path)

@@ -3,11 +3,7 @@ import os
 import asyncio
 import sys
 
-GAME_OBJECT_DIRECTORY = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))     
-GAME_OBJECT_DIRECTORY = os.path.join(GAME_OBJECT_DIRECTORY,'game_object')
-sys.path.append(GAME_OBJECT_DIRECTORY)
-print(GAME_OBJECT_DIRECTORY)
-import object_initialize #type: ignore
+import object_initialize
 
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1200
@@ -18,19 +14,20 @@ class game_render(arcade.Window):
         super().__init__(width,height,name)
         self.background = None
         arcade.set_background_color(arcade.color.AMAZON)
-        self.player_list = []
+        self.player_list = None
+        self.background_object = None
+        self.imovable_object = None
+        self.enemies = None
 
-    def setup(self,background_image): #Game setup
-        #background
-        self.background = arcade.load_texture(background_image)
+        GAME_DIRECTORY = os.path.dirname(os.path.abspath(__file__))     
+        sys.path.append(GAME_DIRECTORY)
+
+    def setup(self): #Game setup
+        def background_image(self,background_im):   #background
+            self.background = arcade.load_texture(background_im)
 
         #player
         self.player_list = arcade.SpriteList()
-        def player_model(x,y):
-            self.player_sprite = object_initialize.character_idle_animation(x,y)
-            return self.player_sprite
-        
-        self.player_list.append(player_model)
 
         #background object
         self.background_object = arcade.SpriteList()
