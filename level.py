@@ -13,6 +13,7 @@ class number_level():
         self.level = level
         self.background_path = None
         self.player_sprite_list = []
+        self.wall_sprite_list = []
         self.background_object_list = []
         self.imovable_object_list = []
 
@@ -21,6 +22,9 @@ class number_level():
 
     def level_player(self,player_sprite):
         self.player_sprite_list.append(player_sprite)
+
+    def level_wall(self,wall_sprite):
+        self.wall_sprite_list.append(wall_sprite)
 
     def level_background_object(self,background_object):
         self.background_object = []
@@ -35,8 +39,18 @@ async def level_1():
     background_path = f'{GAME_OBJECT}\\background\\forest-background.png'
     level.level_background(background_path)
 
-    player_sprite = await object_initialize.character_idle_animation(50,50)
+    player_sprite = object_initialize.Player_Model()
+    player_sprite.center_x = 100
+    player_sprite.center_y = 100
+    player_sprite.scale = 2
     level.level_player(player_sprite)
+
+    wall_sprite_list = []
+    for x in range(0,1000,36):
+        wall_sprite = object_initialize.tile_map()
+        wall_sprite.center_x = x
+        wall_sprite.center_y = 17
+        level.level_wall(wall_sprite)
     
-    await player_sprite
+
     return level

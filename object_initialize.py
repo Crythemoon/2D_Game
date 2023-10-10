@@ -4,25 +4,46 @@ import asyncio
 import numpy
 import os
 
+RIGHT_FACING = 0
+LEFT_FACING = 1
+UPDATE_PER_FRAME = 20
+
 GAME_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 GAME_OBJECT = os.path.join(GAME_DIRECTORY,'game_object')
 
-DISPLAY_SIZE = arcade.get_display_size
+def load_texture_pair(file_path):
+    return [
+        arcade.load_texture(file_path),
+        arcade.load_texture(file_path,flipped_horizontally=True)
+    ]
 
-def scale(s,x):
-    return DISPLAY_SIZE(1)[1] / (s*x)
+class Player_Model(arcade.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.character_face_direction = RIGHT_FACING
+        self.cur_texture = 0
+        self.scale = 1
+        main_path = f'{GAME_OBJECT}\\character'
 
-async def image_size(path):
-    im = Image.open(path)
-    height = numpy.array(im)
-    height = height.shape[0]
-    return height
+        self.idle_texture = []
+        for i in range(4):
+            texture = load_texture_pair(f'{main_path}\\idle{i+1}.png')
+            self.idle_texture.append(texture)
 
-async def character_idle_animation(x,y):
-    image_path = f'{GAME_OBJECT}\\character\\Idle gif right.gif'
-    task = await(image_size(image_path))
-    size = scale(task,30)
-    model = arcade.Sprite(image_path,size)
-    model.center_x = x
-    model.center_y = y
-    return model
+    def update_animation(self,delta_time: float = 1/1000):
+        if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+            self.character_face_direction = LEFT_FACING
+        elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
+            self.character_face_direction = RIGHT_FACING
+        
+        self.cur_texture += 1
+        if self.cur_texture > 3 * UPDATE_PER_FRAME:
+            self.cur_texture = 0
+        frame = self.cur_texture // UPDATE_PER_FRAME
+        direction = self.character_face_direction
+        self.texture = self.idle_texture[frame][direction]
+
+def tile_map():
+    wall_path = f'{GAME_OBJECT}\\wall\\tile_2.png'
+    wall_sprite = arcade.Sprite(wall_path,2)
+    return wall_sprite
