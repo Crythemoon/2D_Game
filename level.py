@@ -47,10 +47,13 @@ async def level_1():
 
     wall_sprite_list = []
     for x in range(0,1000,36):
-        wall_sprite = object_initialize.tile_map()
+        wall_sprite = await object_initialize.tile_map_22()
         wall_sprite.center_x = x
-        wall_sprite.center_y = 17
+        wall_sprite.center_y = 54
         level.level_wall(wall_sprite)
-    
+        wall_sprite = await object_initialize.tile_map_122()
+        wall_sprite.center_x = x
+        wall_sprite.center_y = 18
+        level.level_wall(wall_sprite)
 
     return level

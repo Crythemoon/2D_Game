@@ -1,0 +1,28 @@
+{
+    "activeFile": "C:/Users/cryth/OneDrive/Desktop/kenney_pixel-platformer/Tiled/tilemap-example-a.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "C:/Users/cryth/OneDrive/Desktop/kenney_pixel-platformer/Tiled/tilemap-example-a.tmx": {
+            "scale": 1.7376068376068374,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 234.23020167240537,
+                "y": 135.53123462862766
+            }
+        },
+        "C:/Users/cryth/OneDrive/Desktop/kenney_pixel-platformer/Tiled/tileset-characters.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/cryth/OneDrive/Desktop/kenney_pixel-platformer/Tiled/tileset-tiles.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "openFiles": [
+        "C:/Users/cryth/OneDrive/Desktop/kenney_pixel-platformer/Tiled/tilemap-example-a.tmx"
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "C:/Users/cryth/OneDrive/Desktop/kenney_pixel-platformer/Tiled/tilemap-example-a.tmx"
+    ]
+}
