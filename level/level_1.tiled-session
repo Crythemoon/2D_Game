@@ -1,0 +1,83 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "level_1.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/level_1.json": {
+            "scale": 0.09240234374999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2570.281124497992,
+                "y": 1282.4350031705771
+            }
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/spritesheet.json": {
+            "scaleInDock": 1
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/standard_tileset.json": {
+            "scaleInDock": 1
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_map_7.json": {
+            "scale": 0.111328125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2564.4912280701756,
+                "y": 965.614035087719
+            }
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_objects.json": {
+            "scale": 0.22265625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1282.2456140350878,
+                "y": 1282.2456140350876
+            }
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "level_1.tmx": {
+            "scale": 0.9640740740740741,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -45.12101421436802,
+                "y": 286.8036880522474
+            }
+        },
+        "tilemap-backgrounds_packed.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/background",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 18,
+    "map.tileWidth": 18,
+    "openFiles": [
+        "level_1.tmx",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx"
+    ],
+    "project": "level_1.tiled-project",
+    "property.type": "file",
+    "recentFiles": [
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx",
+        "tilemap-backgrounds_packed.tsx",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/level_1.json",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_map_7.json",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_objects.json",
+        "level_1.tmx"
+    ],
+    "resizeMap.removeObjects": true,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 774,
+        "width": 1024
+    }
+}

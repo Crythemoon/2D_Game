@@ -21,39 +21,25 @@ class number_level():
         self.background_path = background_path
 
     def level_player(self,player_sprite):
+        self.player_sprite_list = arcade.SpriteList()
         self.player_sprite_list.append(player_sprite)
 
-    def level_wall(self,wall_sprite):
-        self.wall_sprite_list.append(wall_sprite)
-
-    def level_background_object(self,background_object):
-        self.background_object = []
-        self.background_object.append(background_object)
-
-    def level_imovable_object(self):
-        pass
+    def level_tile_map(self,map_path):
+        self.map_path = map_path
 
 async def level_1():
     level = number_level(1)
 
-    background_path = f'{GAME_OBJECT}\\background\\forest-background.png'
+    background_path = f'{GAME_OBJECT}\\background\\backgroundColorForest.png'
     level.level_background(background_path)
 
     player_sprite = object_initialize.Player_Model()
     player_sprite.center_x = 100
     player_sprite.center_y = 100
-    player_sprite.scale = 2
+    player_sprite.scale = 1
     level.level_player(player_sprite)
 
-    wall_sprite_list = []
-    for x in range(0,1000,36):
-        wall_sprite = await object_initialize.tile_map_22()
-        wall_sprite.center_x = x
-        wall_sprite.center_y = 54
-        level.level_wall(wall_sprite)
-        wall_sprite = await object_initialize.tile_map_122()
-        wall_sprite.center_x = x
-        wall_sprite.center_y = 18
-        level.level_wall(wall_sprite)
+    tile_map_path = f'{GAME_DIRECTORY}\\level\\level_1.tmx'
+    level.level_tile_map(tile_map_path)
 
     return level
