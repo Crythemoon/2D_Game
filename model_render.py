@@ -17,12 +17,8 @@ TILE_SCALING = 1
 SPRITE_PIXEL_SIZE = 18
 GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
 
-LAYER_NAME_PLATFORMS = 'Platforms'
-LAYER_NAME_FOREGROUND = "Foregrounds"
-LAYER_NAME_BACKGROUND = "Backgrounds"
-
-SCREEN_WIDTH = 810
-SCREEN_HEIGHT = 612
+SCREEN_WIDTH = 540
+SCREEN_HEIGHT = 360
 GAME_NAME = 'Vampire Tombs'
 
 class game(arcade.Window):
@@ -44,39 +40,27 @@ class game(arcade.Window):
         
         arcade.set_background_color(arcade.color.AMAZON)
 
-        self.player_list = None
+        self.player_sprite = None
 
-    def setup(self,player_sprite_list,wall_sprite_list,map_path): #Game setup
+    def setup(self,player_sprite,tile_map,layer_option): #Game setup
         self.camera = arcade.Camera(self.width,self.height)
         self.gui_camera = arcade.Camera(self.width,self.height)
 
-        layer_option = {
-            LAYER_NAME_PLATFORMS:{
-                "use_spatial_hash": True
-            },
-            LAYER_NAME_BACKGROUND:{
-                "use_spatial_hash": False
-            },
-            LAYER_NAME_FOREGROUND:{
-                "use_spatial_hash": False
-            }
-        }
-
-        self.tile_map = arcade.load_tilemap(map_path,1,layer_option)
+        self.tile_map = tile_map
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        self.scene.add_sprite_list_after("Player",LAYER_NAME_FOREGROUND)
+        self.scene.add_sprite_list_after("Player","Foregrounds")
 
-        self.player_list = player_sprite_list
-        self.scene.add_sprite("Player",self.player_list[0])
+        self.player_sprite = player_sprite
+        self.scene.add_sprite("Player",self.player_sprite)
 
         self.end_of_map = self.tile_map.width * GRID_PIXEL_SIZE
 
-        self.physics_engine = arcade.PhysicsEnginePlatformer(player_sprite_list[0],gravity_constant=GRAVITY,walls=self.scene["Platforms"])
+        self.physics_engine = arcade.PhysicsEnginePlatformer(player_sprite,gravity_constant=GRAVITY,walls=self.scene["Platforms"])
 
     def on_draw(self):  #Game render
         arcade.start_render()
-        self.player_list.draw()
+        self.player_sprite.draw()
         self.camera.use()
         self.scene.draw()
         self.gui_camera.use()
@@ -130,7 +114,7 @@ class game(arcade.Window):
 async def main():
     start = game(SCREEN_WIDTH,SCREEN_HEIGHT,GAME_NAME)
     level1 = await level.level_1()
-    start.setup(level1.player_sprite_list,level1.wall_sprite_list,level1.map_path)
+    start.setup()
 
     arcade.run()
 asyncio.run(main())
