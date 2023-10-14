@@ -10,6 +10,9 @@ UPDATE_PER_FRAME = 20
 GAME_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 GAME_OBJECT = os.path.join(GAME_DIRECTORY,'game_object')
 
+SCREEN_WIDTH = 1680
+SCREEN_HEIGHT = 1080
+
 def load_texture_pair(file_path):
     return [
         arcade.load_texture(file_path),
@@ -21,7 +24,7 @@ class Player_Model(arcade.Sprite):
         super().__init__()
         self.character_face_direction = RIGHT_FACING
         self.cur_texture = 0
-        self.scale = 1
+        self.scale = 3
         main_path = f'{GAME_OBJECT}\\character'
 
         self.is_idle = True
@@ -65,3 +68,10 @@ class Player_Model(arcade.Sprite):
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
             self.texture = self.walking_texture[frame][direction]
+
+def TutorialCharacter():
+    texture_path = f'{GAME_OBJECT}\\NPC\\tile_0021.png'
+    character = arcade.Sprite(texture_path,1)
+    character.center_x = SCREEN_WIDTH - (312 / 2)
+    character.center_y = 312 / 2
+    return character

@@ -1,0 +1,68 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/kenney_pixel-platformer/Tiled/tileset-characters.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/kenney_pixel-platformer/Tiled/tileset-tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap-backgrounds_packed.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_farm_packed.tsx": {
+            "scaleInEditor": 1
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx": {
+            "scaleInEditor": 1
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed_exanpsion.tsx": {
+            "scaleInDock": 1
+        },
+        "backgroundColorGrass_edit.tsx": {
+            "scaleInDock": 1
+        },
+        "level_1.tmx": {
+            "scale": 0.6884567901234567,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 801.7932394871336,
+                "y": 286.1472249618937
+            }
+        },
+        "level_1.tmx#tilemap_packed": {
+            "scaleInDock": 1
+        }
+    },
+    "frame.defaultDuration": 300,
+    "last.imagePath": "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/NPC/tile_map",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 54,
+    "map.tileWidth": 54,
+    "openFiles": [
+    ],
+    "project": "GUI_Camera.tiled-project",
+    "recentFiles": [
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_farm_packed.tsx",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/kenney_pixel-platformer/Tiled/tileset-characters.tsx",
+        "level_1.tmx",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap-backgrounds_packed.tsx",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/kenney_pixel-platformer/Tiled/tileset-tiles.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 72,
+        "width": 72
+    }
+}

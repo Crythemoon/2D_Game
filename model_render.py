@@ -1,8 +1,8 @@
 import arcade
-import asyncio
 import os
 import sys
-import level
+from arcade.application import Window
+
 GAME_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(GAME_DIRECTORY)
 GAME_OBJECT = os.path.join(GAME_DIRECTORY,'game_object')
@@ -13,12 +13,12 @@ PLAYER_WALKING_SPEED = 0.5
 GRAVITY = 2
 PLAYER_JUMP_SPEED = 10
 
-TILE_SCALING = 1
+TILE_SCALING = 3
 SPRITE_PIXEL_SIZE = 18
 GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
 
-SCREEN_WIDTH = 540
-SCREEN_HEIGHT = 360
+SCREEN_WIDTH = 1620
+SCREEN_HEIGHT = 1080
 GAME_NAME = 'Vampire Tombs'
 
 class game(arcade.Window):
@@ -37,6 +37,8 @@ class game(arcade.Window):
         self.end_of_map = 0
 
         self.level = None
+
+        self.health = 0
         
         arcade.set_background_color(arcade.color.AMAZON)
 
@@ -44,6 +46,7 @@ class game(arcade.Window):
 
     def setup(self,player_sprite,tile_map,layer_option): #Game setup
         self.camera = arcade.Camera(self.width,self.height)
+        
         self.gui_camera = arcade.Camera(self.width,self.height)
 
         self.tile_map = tile_map
@@ -109,12 +112,3 @@ class game(arcade.Window):
         self.player_list.update_animation()
         self.physics_engine.update()
         self.center_camera_to_player()
-
-        
-async def main():
-    start = game(SCREEN_WIDTH,SCREEN_HEIGHT,GAME_NAME)
-    level1 = await level.level_1()
-    start.setup()
-
-    arcade.run()
-asyncio.run(main())
