@@ -15,10 +15,12 @@ class CutScene(arcade.View):
         self.level = level
         self.texture_list = None
 
-    def setup(self,texture):
+    def setup(self,character_texture,text_bubble_texture):
         self.texture_list = arcade.SpriteList()
-        character = texture
+        character = character_texture
         self.texture_list.append(character)
+        text_bubble = text_bubble_texture
+        self.texture_list.append(text_bubble)
 
     def on_draw(self):
         self.texture_list.draw()
@@ -26,7 +28,7 @@ class CutScene(arcade.View):
 def main():
     window = arcade.Window(SCREEN_WIDTH,SCREEEN_HEIGHT)
     scene = CutScene(1)
-    scene.setup(object_initialize.TutorialCharacter())
+    scene.setup(object_initialize.TutorialCharacter(),object_initialize.texture_bubble())
     window.show_view(scene)
     arcade.run()
 

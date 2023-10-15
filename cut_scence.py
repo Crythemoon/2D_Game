@@ -1,6 +1,7 @@
 import arcade
 import os
 import sys
+import object_initialize
 
 GAME_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(GAME_DIRECTORY)
@@ -14,12 +15,12 @@ class CutScene(arcade.View):
         self.level = level
         self.texture_list = None
 
-    def setup(self,texture,x,y):
-        self.texture_list = arcade.SpriteList
-        character = texture
-        character.center_x = SCREEN_WIDTH - (x / 2)
-        character.center_y = y / 2
+    def setup(self,character_texture,text_bubble_texture):
+        self.texture_list = arcade.SpriteList()
+        character = character_texture
         self.texture_list.append(character)
+        text_bubble = text_bubble_texture
+        self.texture_list.append(text_bubble)
 
     def on_draw(self):
         self.texture_list.draw()

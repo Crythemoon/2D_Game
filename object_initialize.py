@@ -13,6 +13,8 @@ GAME_OBJECT = os.path.join(GAME_DIRECTORY,'game_object')
 SCREEN_WIDTH = 1680
 SCREEN_HEIGHT = 1080
 
+CHARACTER_SCALING = 1
+
 def load_texture_pair(file_path):
     return [
         arcade.load_texture(file_path),
@@ -23,24 +25,29 @@ class Player_Model(arcade.Sprite):
     def __init__(self):
         super().__init__()
         self.character_face_direction = RIGHT_FACING
+        
         self.cur_texture = 0
-        self.scale = 3
+        self.scale = CHARACTER_SCALING
+
         main_path = f'{GAME_OBJECT}\\character'
 
         self.is_idle = True
+        self.jumping = False
+        self.climbing = False
+        self.is_on_ladder = False
 
         self.idle_texture = []  #idle animation
         for i in range(2):
-            texture = load_texture_pair(f'{main_path}\\idle_character_000{i+1}.png')
+            texture = load_texture_pair(f'{main_path}\\idle_animation_000{i+1}.png')
             self.idle_texture.append(texture)
-        self.idle_texture.append(load_texture_pair(f'{main_path}\\idle_character_0001.png'))
+        self.idle_texture.append(load_texture_pair(f'{main_path}\\idle_animation_0001.png'))
         for i in range(2):
-            texture = load_texture_pair(f'{main_path}\\idle_character_000{i+3}.png')
+            texture = load_texture_pair(f'{main_path}\\idle_animation_000{i+3}.png')
             self.idle_texture.append(texture)
 
         self.walking_texture = []
         for i in range(4):
-            texture = load_texture_pair(f'{main_path}\\walking_character_000{i+1}.png')
+            texture = load_texture_pair(f'{main_path}\\walking_animation_000{i+1}.png')
             self.walking_texture.append(texture)
 
         self.jumping_texture = []
@@ -71,7 +78,14 @@ class Player_Model(arcade.Sprite):
 
 def TutorialCharacter():
     texture_path = f'{GAME_OBJECT}\\NPC\\tile_0021.png'
-    character = arcade.Sprite(texture_path,1)
+    character = arcade.Sprite(texture_path,0.8)
     character.center_x = SCREEN_WIDTH - (312 / 2)
     character.center_y = 312 / 2
     return character
+
+def texture_bubble():
+    texture_path = f'{GAME_OBJECT}\\text_bubble\\pixel-speech-bubble.png'
+    speech_bubble = arcade.Sprite(texture_path,1)
+    speech_bubble.center_x = SCREEN_WIDTH * 2 / 3
+    speech_bubble.center_y = SCREEN_HEIGHT / 3
+    return speech_bubble
