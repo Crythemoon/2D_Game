@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap-characters_packed.tsx",
+    "activeFile": "level_1.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -40,11 +40,11 @@
             "scaleInDock": 1
         },
         "level_1.tmx": {
-            "scale": 0.33,
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1124.2424242424242,
-                "y": 527.2727272727273
+                "x": 1120,
+                "y": 522
             }
         },
         "level_1.tmx#tilemap_packed": {
@@ -62,8 +62,8 @@
     ],
     "project": "GUI_Camera.tiled-project",
     "recentFiles": [
-        "level_1.tmx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap-characters_packed.tsx",
+        "level_1.tmx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_farm_packed.tsx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/kenney_pixel-platformer/Tiled/tileset-characters.tsx",
