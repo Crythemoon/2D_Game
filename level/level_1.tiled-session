@@ -5,7 +5,9 @@
     },
     "activeFile": "level_1.tmx",
     "expandedProjectPaths": [
-        "."
+        ".",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -39,16 +41,23 @@
                 "y": 1282.2456140350876
             }
         },
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx": {
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap-characters_packed.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_farm_packed.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        },
         "level_1.tmx": {
-            "scale": 0.9640740740740741,
-            "selectedLayer": 0,
+            "scale": 0.33,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": -45.12101421436802,
-                "y": 286.8036880522474
+                "x": 1783.3333333333333,
+                "y": 562.121212121212
             }
         },
         "tilemap-backgrounds_packed.tsx": {
@@ -56,6 +65,7 @@
             "scaleInEditor": 1
         }
     },
+    "frame.defaultDuration": 350,
     "last.imagePath": "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/background",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 18,
@@ -65,14 +75,15 @@
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx"
     ],
     "project": "level_1.tiled-project",
-    "property.type": "file",
+    "property.type": "bool",
     "recentFiles": [
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx",
+        "level_1.tmx",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap-characters_packed.tsx",
         "tilemap-backgrounds_packed.tsx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/level_1.json",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_map_7.json",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_objects.json",
-        "level_1.tmx"
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_objects.json"
     ],
     "resizeMap.removeObjects": true,
     "tileset.lastUsedFormat": "tsx",

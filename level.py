@@ -18,9 +18,6 @@ class number_level():
         self.level = level
         self.background_path = None
         self.player_sprite_list = []
-        self.wall_sprite_list = []
-        self.background_object_list = []
-        self.imovable_object_list = []
 
     def level_background(self,background_path):
         self.background_path = background_path
@@ -32,7 +29,7 @@ class number_level():
         self.map_path = map_path
         self.layer_option = layer_option
 
-async def level_1():
+def level_1():
     level = number_level(1)
 
     player_sprite = object_initialize.Player_Model()
@@ -42,7 +39,6 @@ async def level_1():
     level.level_player(player_sprite)
 
     tile_map_path = f'{GAME_DIRECTORY}\\level\\level_1.tmx'
-    level.level_tile_map(map_path=tile_map_path)
 
     layer_option = {
         LAYER_NAME_PLATFORMS:{
@@ -58,7 +54,7 @@ async def level_1():
             "use_spatial_hash": True
         }
     }
-    level.level_tile_map(layer_option=layer_option)
+    level.level_tile_map(map_path=tile_map_path,layer_option=layer_option)
 
     tile_map = arcade.load_tilemap(tile_map_path,1,layer_option)
     scene = arcade.Scene.from_tilemap(tile_map)
@@ -68,3 +64,4 @@ async def level_1():
     
 
     return level
+

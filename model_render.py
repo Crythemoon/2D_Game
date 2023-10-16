@@ -1,114 +1,216 @@
-import arcade
 import os
 import sys
-from arcade.application import Window
+import arcade
+import level
 
-GAME_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+GAME_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(GAME_DIRECTORY)
-GAME_OBJECT = os.path.join(GAME_DIRECTORY,'game_object')
 
-PLAYER_START_X = 50
-PLAYER_START_Y = 100
+TILE_SCALLING = 1
+CHARACTER_SCALING = 1
+SPRITE_PIXEL_SIZE = 54
+
 PLAYER_WALKING_SPEED = 0.5
+PLAYER_RUNNING_SPEED = 1
+PLAYER_CLIMBING_SPEED = 0.5
 GRAVITY = 2
 PLAYER_JUMP_SPEED = 10
 
-TILE_SCALING = 3
-SPRITE_PIXEL_SIZE = 18
-GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
+LAYER_NAME_CHARACTER = "Characters"
+LAYER_NAME_PLATFORMS = "Platforms"
+LAYER_NAME_FOREGROUND = "Foregrounds"
+LAYER_NAME_BACKGROUND = "Backgrounds"
+LAYER_NAME_ENEMY = "Enemies"
+LAYER_NAME_PLAYER = "Player"
+LAYER_NAME_JUMPABLE_PLATFORM = "Jump Platforms"
 
-SCREEN_WIDTH = 1620
-SCREEN_HEIGHT = 1080
-GAME_NAME = 'Vampire Tombs'
+class GameView(arcade.View):
+    def __init__(self):
+        super().__init__()
 
-class game(arcade.Window):
-    def __init__(self,width,height,name):
-        super().__init__(width,height,name)
+        os.chdir(GAME_DIRECTORY)
+
+        self.left_pressed = False
+        self.right_pressed = False
+        self.up_pressed = False
+        self.down_pressed = False
+        self.shift_pressed = False
+        self.jump_needs_reset = False
+
         self.tile_map = None
 
         self.scene = None
 
-        self.physics_engine = None
+        self.player_sprite_list = None
         
+        self.physics_engine = None
+
         self.camera = None
 
         self.gui_camera = None
 
         self.end_of_map = 0
 
-        self.level = None
+        self.level_list = []
 
-        self.health = 0
-        
-        arcade.set_background_color(arcade.color.AMAZON)
+    def setup(self):
+        self.camera = arcade.Camera(self.window.width,self.window.height)
+        self.gui_camera = arcade.Camera(self.window.width,self.window.height)
 
-        self.player_sprite = None
+        room = level.level_1()
+        self.level_list.append(room)
 
-    def setup(self,player_sprite,tile_map,layer_option): #Game setup
-        self.camera = arcade.Camera(self.width,self.height)
-        
-        self.gui_camera = arcade.Camera(self.width,self.height)
+        self.current_room = 0
 
-        self.tile_map = tile_map
-        self.scene = arcade.Scene.from_tilemap(self.tile_map)
-
-        self.scene.add_sprite_list_after("Player","Foregrounds")
-
-        self.player_sprite = player_sprite
-        self.scene.add_sprite("Player",self.player_sprite)
-
-        self.end_of_map = self.tile_map.width * GRID_PIXEL_SIZE
-
-        self.physics_engine = arcade.PhysicsEnginePlatformer(player_sprite,gravity_constant=GRAVITY,walls=self.scene["Platforms"])
-
-    def on_draw(self):  #Game render
-        arcade.start_render()
-        self.player_sprite.draw()
-        self.camera.use()
-        self.scene.draw()
-        self.gui_camera.use()
-
-    def center_camera_to_player(self):
-        screen_center_x = self.player_list[0].center_x - (self.camera.viewport_width / 2)
-        screen_center_y = self.player_list[0].center_y - (
-            self.camera.viewport_height / 2
+        self.tile_map = arcade.load_tilemap(
+            self.level_list[self.current_room].map_path,
+            1,
+            self.level_list[self.current_room].layer_option
         )
 
-        # Don't let camera travel past 0
-        if screen_center_x < 0:
-            screen_center_x = 0
-        if screen_center_y < 0:
-            screen_center_y = 0
-        player_centered = screen_center_x, screen_center_y
+        self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        self.camera.move_to(player_centered)
+        self.scene.add_sprite_list_after(LAYER_NAME_PLAYER,LAYER_NAME_FOREGROUND)
+        
+        self.player_sprite = self.level_list[self.current_room].player_sprite
+        self.scene.add_sprite(LAYER_NAME_PLAYER,self.player_sprite)
 
+        self.physics_engine = arcade.PhysicsEnginePlatformer(
+            self.player_sprite,
+            platforms = self.scene[LAYER_NAME_PLATFORMS],
+            gravity_constant = GRAVITY
+        )
     
+    def on_show_view(self):
+        self.setup()
+
+    def on_draw(self):
+        self.clear()
+
+        self.camera.use()
+
+        self.scene.draw()
+
+        self.gui_camera.use()
+
+    def process_keychange(self):
+
+        # Process up/down
+        if self.up_pressed and not self.down_pressed:
+            if self.physics_engine.is_on_ladder():
+                self.player_sprite.change_y = PLAYER_CLIMBING_SPEED
+            elif (
+                self.physics_engine.can_jump(y_distance=10)
+                and not self.jump_needs_reset
+            ):
+                self.player_sprite.change_y = PLAYER_JUMP_SPEED
+                self.jump_needs_reset = True
+                arcade.play_sound(self.jump_sound)
+        elif self.down_pressed and not self.up_pressed:
+            if self.physics_engine.is_on_ladder():
+                self.player_sprite.change_y = -PLAYER_CLIMBING_SPEED
+
+        # Process up/down when on a ladder and no movement
+        if self.physics_engine.is_on_ladder():
+            if not self.up_pressed and not self.down_pressed:
+                self.player_sprite.change_y = 0
+            elif self.up_pressed and self.down_pressed:
+                self.player_sprite.change_y = 0
+
+        # Process left/right
+        if self.right_pressed and not self.left_pressed:
+            self.player_sprite.change_x = PLAYER_WALKING_SPEED
+        elif self.left_pressed and not self.right_pressed:
+            self.player_sprite.change_x = -PLAYER_WALKING_SPEED
+        else:
+            self.player_sprite.change_x = 0
+
+        if self.right_pressed and self.shift_pressed and not self.left_pressed:
+            self.player_sprite.change_x = PLAYER_RUNNING_SPEED
+        elif self.left_pressed and self.shift_pressed and not self.right_pressed:
+            self.player_sprite.change_x = PLAYER_RUNNING_SPEED
+        elif self.right_pressed and self.shift_pressed and self.left_pressed:
+            self.player_sprite.change_x = 0
+
+        
+
     def on_key_press(self, key, modifiers):
 
         if key == arcade.key.UP or key == arcade.key.W:
-            if self.physics_engine.can_jump():
-                self.player_list[0].change_y = PLAYER_JUMP_SPEED
+            self.up_pressed = True
         elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.player_list[0].change_y = -PLAYER_WALKING_SPEED
+            self.down_pressed = True
         elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.player_list[0].change_x = -PLAYER_WALKING_SPEED
+            self.left_pressed = True
         elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.player_list[0].change_x = PLAYER_WALKING_SPEED
+            self.right_pressed = True
+        elif key == arcade.key.MOD_SHIFT:
+            self.shift_pressed = True
+
+        if key == arcade.key.PLUS:
+            self.camera.zoom(0.01)
+        elif key == arcade.key.MINUS:
+            self.camera.zoom(-0.01)
+
+        self.process_keychange()
 
     def on_key_release(self, key, modifiers):
 
         if key == arcade.key.UP or key == arcade.key.W:
-            self.player_list[0].change_y = 0
+            self.up_pressed = False
+            self.jump_needs_reset = False
         elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.player_list[0].change_y = 0
+            self.down_pressed = False
         elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.player_list[0].change_x = 0
+            self.left_pressed = False
         elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.player_list[0].change_x = 0
+            self.right_pressed = False
+        elif key == arcade.key.MOD_SHIFT:
+            self.shift_pressed = False
 
-    def update(self,delta_time):    #Game logic
-        self.player_list.update()
-        self.player_list.update_animation()
+        self.process_keychange()
+
+    def on_mouse_scroll(self, x, y, scroll_x,scroll_y):
+        self.camera.zoom(-0.01 *scroll_y)
+    
+    def center_camera_to_player(self, speed = 0.2):
+        screen_center_x = self.camera.scale * (self.player_sprite.center_x - (self.camera.viewport_width / 2))
+        screen_center_y = self.camera.scale * (self.player_sprite.center_y - (self.camera.viewport_height / 2))
+        if screen_center_x < 0:
+            screen_center_x = 0
+        if screen_center_y < 0:
+            screen_center_y = 0
+        player_centered = (screen_center_x, screen_center_y)    
+
+        self.camera.move_to(player_centered, speed)
+
+    def on_update(self,delta_time):
         self.physics_engine.update()
-        self.center_camera_to_player()
+
+        if self.physics_engine.can_jump():
+            self.player_sprite.can_jump = False
+        else:
+            self.player_sprite.can_jump = True
+
+        if self.physics_engine.is_on_ladder() and not self.physics_engine.can_jump():
+            self.player_sprite.is_on_ladder = True
+            self.process_keychange()
+        else:
+            self.player_sprite.is_on_ladder = False
+            self.process_keychange()
+
+        self.scene.update_animation(
+            delta_time,
+            [
+                LAYER_NAME_BACKGROUND,
+                LAYER_NAME_CHARACTER,
+                LAYER_NAME_FOREGROUND,
+                LAYER_NAME_ENEMY,
+                LAYER_NAME_CHARACTER,
+                LAYER_NAME_PLAYER
+            ]
+        )
+
+        self.scene.update(
+            [LAYER_NAME_ENEMY,LAYER_NAME_CHARACTER]
+        )
