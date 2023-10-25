@@ -8,10 +8,13 @@ GAME_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(GAME_DIRECTORY)
 GAME_OBJECT = os.path.join(GAME_DIRECTORY,'game_object')
 
+LAYER_NAME_NPC = "NPC"
 LAYER_NAME_PLATFORMS = "Platforms"
-LAYER_NAME_FOREGROUND = "Foregounds"
+LAYER_NAME_FOREGROUND = "Foregrounds"
 LAYER_NAME_BACKGROUND = "Backgrounds"
-LAYER_NAME_CHARACTER = "Characters"
+LAYER_NAME_ENEMY = "Enemies"
+LAYER_NAME_PLAYER = "Player"
+LAYER_NAME_JUMPABLE_PLATFORM = "Jump Platforms"
 
 class number_level():
     def __init__(self,level):
@@ -50,7 +53,7 @@ def level_1():
         LAYER_NAME_FOREGROUND:{
             "use_spatial_hash": False
         },
-        LAYER_NAME_CHARACTER:{
+        LAYER_NAME_NPC:{
             "use_spatial_hash": True
         }
     }

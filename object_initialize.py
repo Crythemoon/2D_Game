@@ -27,6 +27,7 @@ class Player_Model(arcade.Sprite):
         self.character_face_direction = RIGHT_FACING
         
         self.cur_texture = 0
+
         self.scale = CHARACTER_SCALING
 
         main_path = f'{GAME_OBJECT}\\character'
@@ -76,6 +77,145 @@ class Player_Model(arcade.Sprite):
             direction = self.character_face_direction
             self.texture = self.walking_texture[frame][direction]
 
+class BatEnemy(arcade.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.character_face_direction = LEFT_FACING
+        self.cur_texture = 0
+
+        self.scale = CHARACTER_SCALING
+
+        main_path = f'{GAME_OBJECT}\\kenney_pixel-platformer\\Tiles\\Characters'
+
+        self.all_texture = []
+        for i in range(3):
+            texture = load_texture_pair(f'{main_path}\\tile_002{i+4}')
+            self.all_texture.append(texture)
+        
+    def update_animation(self, delta_time: float = 1 / 60):
+        if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+            self.character_face_direction = LEFT_FACING
+        elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
+            self.character_face_direction = RIGHT_FACING
+
+        if self.change_x == 0 and self.change_y == 0:
+            self.cur_texture += 1
+            if self.cur_texture > 3 * UPDATE_PER_FRAME:
+                self.cur_texture = 0
+            frame = self.cur_texture // UPDATE_PER_FRAME
+            direction = self.character_face_direction
+            self.texture = self.all_texture[frame][direction]
+
+        if self.change_x != 0 and self.change_y == 0:
+            self.cur_texture += 1
+            if self.cur_texture > 3 * UPDATE_PER_FRAME:
+                self.cur_texture = 0
+            frame = self.cur_texture // 3
+            direction = self.character_face_direction
+            self.texture = self.all_texture[frame][direction]
+
+class BlueRobotEnemy(arcade.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.character_face_direction = LEFT_FACING
+
+        self.cur_texture = 0
+        self.scale = CHARACTER_SCALING
+
+        main_path = f'{GAME_OBJECT}\\kenney_pixel-platformer\\Tiles\\Characters'
+
+        self.is_idle = True
+        self.is_moving = False
+
+        self.idle_texture = []
+        for i in range (3):
+            texture = load_texture_pair(f'{main_path}\\tile_00{i+18}')
+            self.idle_texture.append(texture)
+        
+        self.moving_texture = []
+        for i in range (2):
+            texture = load_texture_pair(f'{main_path}\\tile_00{i+18}')
+            self.moving_texture.append(texture)
+    
+    def update_animation(self, delta_time: float = 1 / 60):
+        if self.change_x > 0 and self.character_face_direction == LEFT_FACING:
+            self.character_face_direction = RIGHT_FACING
+        elif self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+            self.character_face_direction = LEFT_FACING
+
+        if self.change_x == 0:
+            self.is_idle = True
+        elif self.change_x != 0:
+            self.is_idle = False
+            self.is_moving = True
+
+        if self.is_idle:
+            self.cur_texture += 1
+            if self.cur_texture > 3 * UPDATE_PER_FRAME:
+                self.cur_texture = 0
+            frame = self.cur_texture // UPDATE_PER_FRAME
+            direction = self.character_face_direction
+            self.texture = self.idle_texture[frame][direction]
+
+        if self.is_moving:
+            self.cur_texture += 1
+            if self.cur_texture > 2 * UPDATE_PER_FRAME:
+                self.cur_texture = 0
+            frame = self.cur_texture // UPDATE_PER_FRAME
+            direction = self.character_face_direction
+            self.texture = self.moving_texture[frame][direction]
+
+class RedRobotEnemy(arcade.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.character_face_direction = LEFT_FACING
+
+        self.cur_texture = 0
+        self.scale = CHARACTER_SCALING
+
+        main_path = f'{GAME_OBJECT}\\kenney_pixel-platformer\\Tiles\\Characters'
+
+        self.is_idle = True
+        self.is_moving = False
+
+        self.idle_texture = []
+        for i in range(3):
+            texture = load_texture_pair(f'{main_path}\\tile_00{i+15}')
+            self.idle_texture.append(texture)
+        
+        self.moving_texture = []
+        for i in range (2):
+            texture = load_texture_pair(f'{main_path}\\tile_00{i+15}')
+            self.moving_texture.append(texture)
+
+    def update_animation(self, delta_time: float = 1 / 60):
+        if self.change_x > 0 and self.character_face_direction == LEFT_FACING:
+            self.character_face_direction = RIGHT_FACING
+        elif self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+            self.character_face_direction == LEFT_FACING
+        
+        if self.change_x == 0:
+            self.is_idle = True
+        elif self.change_x != 0:
+            self.is_idle = False
+            self.is_moving = True
+
+        if self.is_idle:
+            self.cur_texture += 1
+            if self.cur_texture > 3 * UPDATE_PER_FRAME:
+                self.cur_texture = 0
+            frame = self.cur_texture // UPDATE_PER_FRAME
+            direction = self.character_face_direction
+            self.texture = self.idle_texture[frame][direction]
+        
+        if self.is_moving:
+            self.cur_texture += 1
+            if self.cur_texture > 2 * UPDATE_PER_FRAME:
+                self.cur_texture = 0
+            frame = self.cur_texture // UPDATE_PER_FRAME
+            direction = self.character_face_direction
+            self.texture = self.moving_texture[frame][direction]
+
 def TutorialCharacter():
     texture_path = f'{GAME_OBJECT}\\NPC\\tile_0021.png'
     character = arcade.Sprite(texture_path,0.8)
@@ -89,3 +229,5 @@ def texture_bubble():
     speech_bubble.center_x = SCREEN_WIDTH * 2 / 3
     speech_bubble.center_y = SCREEN_HEIGHT / 3
     return speech_bubble
+
+
