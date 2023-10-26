@@ -2,6 +2,7 @@ import os
 import sys
 import arcade
 import level
+from typing import Optional
 
 GAME_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(GAME_DIRECTORY)
@@ -24,6 +25,14 @@ LAYER_NAME_ENEMY = "Enemies"
 LAYER_NAME_PLAYER = "Player"
 LAYER_NAME_JUMPABLE_PLATFORM = "Jump Platforms"
 
+class Menu(arcade.View):
+    def on_show_view(self):
+        arcade.set_background_color(arcade.color.WHITE)
+    
+    def on_draw(self):
+        self.clear()
+        arcade
+
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
@@ -34,24 +43,32 @@ class GameView(arcade.View):
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
-        self.shift_pressed = False
+        self.attack_pressed = False
         self.jump_needs_reset = False
 
         self.tile_map = None
 
         self.scene = None
 
-        self.player_sprite_list = None
+        self.player_sprite: Optional(arcade.Sprite) = None
+        self.NPC_sprite_list: Optional(arcade.SpriteList) = None
+        self.foregound_sprite_list: Optional(arcade.SpriteList) = None
+        self.enemies_sprite_list: Optional(arcade.SpriteList) = None
+        self.dynamic_platform_sprite_list: Optional(arcade.SpriteList) = None
+        self.platform_sprite_list: Optional(arcade.SpriteList) = None
+
+        self.tile_map = None
+        self.scene = None
         
-        self.physics_engine = None
+        self.physics_engine: Optional(arcade.PymunkPhysicsEngine)
 
-        self.camera = None
-
-        self.gui_camera = None
+        self.level = None
 
         self.end_of_map = 0
 
-        self.level_list = []
+        self.camera: Optional(arcade.Camera) = None
+
+        self.gui_camera: Optional(arcade.Camera) = None
 
     def setup(self):
         self.camera = arcade.Camera(self.window.width,self.window.height)
