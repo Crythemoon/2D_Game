@@ -1,35 +1,44 @@
 import arcade
-from arcade.application import Window
+import os
+import sys
+from typing import Optional
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-
-class MenuView(arcade.View):
-    def on_show_view(self):
-        arcade.set_background_color(None)
-    
-    def on_draw(self):
-        arcade.draw_text("Hello", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 
-                         arcade.color.BLACK,font_size=50, anchor_x="center")
-        
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        game = GameView()
-        self.window.show_view(game)
+GAME_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(GAME_DIRECTORY)
 
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
 
-    def on_show_view(self):
-        arcade.set_background_color(arcade.color.AMAZON)
-    
-    def on_draw(self):
-        arcade.draw_text("Hello", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 
-                         arcade.color.BLACK,font_size=50, anchor_x="center")
-    
-def main():
-    window = arcade.Window(SCREEN_WIDTH,SCREEN_HEIGHT,"Hello")
-    menu = MenuView()
-    window.show_view(menu)
-    arcade.run()
-main()
+        os.chdir(GAME_DIRECTORY)
+
+        self.left_pressed = False
+        self.right_pressed = False
+        self.up_pressed = False
+        self.down_pressed = False
+        self.attack_pressed = False
+        self.jump_needs_reset = False
+
+        self.tile_map = None
+
+        self.scene = None
+
+        self.player_sprite: Optional(arcade.Sprite) = None
+        self.NPC_sprite_list: Optional(arcade.SpriteList) = None
+        self.foregound_sprite_list: Optional(arcade.SpriteList) = None
+        self.enemies_sprite_list: Optional(arcade.SpriteList) = None
+        self.dynamic_platform_sprite_list: Optional(arcade.SpriteList) = None
+        self.platform_sprite_list: Optional(arcade.SpriteList) = None
+
+        self.tile_map = None
+        self.scene = None
+        
+        self.physics_engine: Optional(arcade.PymunkPhysicsEngine)
+
+        self.level = None
+
+        self.end_of_map = 0
+
+        self.camera: Optional(arcade.Camera) = None
+
+        self.gui_camera: Optional(arcade.Camera) = None
