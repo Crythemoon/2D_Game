@@ -19,19 +19,27 @@ TILE_SCALLING = 1
 CHARACTER_SCALING = 1
 TILE_PIXEL_SIZE = 54
 
+SCREEN_TILES_WIDTH = 30
+SCREEN_TILES_HEIGHT = 15
+
 PLAYER_WALKING_SPEED = 0.5
 PLAYER_RUNNING_SPEED = 1
 PLAYER_CLIMBING_SPEED = 0.5
 GRAVITY = 2
 PLAYER_JUMP_SPEED = 10
 
-LAYER_NAME_CHARACTER = "Characters"
-LAYER_NAME_PLATFORMS = "Platforms"
+LAYER_NAME_FLAG = "Flag"
+LAYER_NAME_NPC = "NPC"
+LAYER_NAME_COIN = "Coin"
+LAYER_NAME_HEART = "Heart"
 LAYER_NAME_FOREGROUND = "Foregrounds"
+LAYER_NAME_LADDER = "Ladders"
+LAYER_NAME_ENEMY = "Enemy"
+LAYER_NAME_DYNAMIC_PLATFORM = "Dynamic Platforms"
+LAYER_NAME_PLATFORMS_B = "Platforms B"
+LAYER_NAME_PLATFORMS_A = "Platforms A"
 LAYER_NAME_BACKGROUND = "Backgrounds"
-LAYER_NAME_ENEMY = "Enemies"
-LAYER_NAME_PLAYER = "Player"
-LAYER_NAME_JUMPABLE_PLATFORM = "Jump Platforms"
+LAYER_NAME_DEATH_ZONE = "Death Zone"
         
 class Menu(arcade.View):
     def __init__(self):
@@ -124,7 +132,8 @@ class GameView(arcade.View):
 
         self.gui_camera: Optional(arcade.Camera) = None
 
-    def load_level(self):
+    def setup(self):
+
         with open(f'{GAME_DIRECTORY}\\saves\\save.bin', 'rb') as file:
             x = pickle.load(file)
             self.level = x[LEVEL_BINARY][1]
@@ -132,145 +141,16 @@ class GameView(arcade.View):
             self.coin = x[COIN_BINARY][1]
             file.close()
 
-        self.tile_map = arcade.load_tilemap(self.level_list[self.level].map_path,scaling=TILE_SCALLING)
+        self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        self.end_of_map = self.tile_map.width * TILE_PIXEL_SIZE
-        
+        self.player_sprite = self.level_list[level].player_sprite
 
-    def setup(self):
         self.camera = arcade.Camera(self.window.width,self.window.height)
         self.gui_camera = arcade.Camera(self.window.width,self.window.height)
+    
+    def load_level(self,level):
 
-    def on_show_view(self):
-        self.setup()
-
-    def on_draw(self):
-        self.clear()
-
-        self.camera.use()
-
-        self.scene.draw()
-
-        self.gui_camera.use()
-
-    def process_keychange(self):
-
-        # Process up/down
-        if self.up_pressed and not self.down_pressed:
-            if self.physics_engine.is_on_ladder():
-                self.player_sprite.change_y = PLAYER_CLIMBING_SPEED
-            elif (
-                self.physics_engine.can_jump(y_distance=10)
-                and not self.jump_needs_reset
-            ):
-                self.player_sprite.change_y = PLAYER_JUMP_SPEED
-                self.jump_needs_reset = True
-                arcade.play_sound(self.jump_sound)
-        elif self.down_pressed and not self.up_pressed:
-            if self.physics_engine.is_on_ladder():
-                self.player_sprite.change_y = -PLAYER_CLIMBING_SPEED
-
-        # Process up/down when on a ladder and no movement
-        if self.physics_engine.is_on_ladder():
-            if not self.up_pressed and not self.down_pressed:
-                self.player_sprite.change_y = 0
-            elif self.up_pressed and self.down_pressed:
-                self.player_sprite.change_y = 0
-
-        # Process left/right
-        if self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = PLAYER_WALKING_SPEED
-        elif self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = -PLAYER_WALKING_SPEED
-        else:
-            self.player_sprite.change_x = 0
-
-        if self.right_pressed and self.shift_pressed and not self.left_pressed:
-            self.player_sprite.change_x = PLAYER_RUNNING_SPEED
-        elif self.left_pressed and self.shift_pressed and not self.right_pressed:
-            self.player_sprite.change_x = PLAYER_RUNNING_SPEED
-        elif self.right_pressed and self.shift_pressed and self.left_pressed:
-            self.player_sprite.change_x = 0
+        layer_option = self.level_list[level].layer_option
+        self.tile_map = arcade.load_tilemap(self.level_list[level].map_path,scaling=TILE_SCALLING)
 
         
-
-    def on_key_press(self, key, modifiers):
-
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.up_pressed = True
-        elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.down_pressed = True
-        elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.left_pressed = True
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.right_pressed = True
-        elif key == arcade.key.MOD_SHIFT:
-            self.shift_pressed = True
-
-        if key == arcade.key.PLUS:
-            self.camera.zoom(0.01)
-        elif key == arcade.key.MINUS:
-            self.camera.zoom(-0.01)
-
-        self.process_keychange()
-
-    def on_key_release(self, key, modifiers):
-
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.up_pressed = False
-            self.jump_needs_reset = False
-        elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.down_pressed = False
-        elif key == arcade.key.LEFT or key == arcade.key.A:
-            self.left_pressed = False
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.right_pressed = False
-        elif key == arcade.key.MOD_SHIFT:
-            self.shift_pressed = False
-
-        self.process_keychange()
-
-    def on_mouse_scroll(self, x, y, scroll_x,scroll_y):
-        self.camera.zoom(-0.01 *scroll_y)
-    
-    def center_camera_to_player(self, speed = 0.2):
-        screen_center_x = self.camera.scale * (self.player_sprite.center_x - (self.camera.viewport_width / 2))
-        screen_center_y = self.camera.scale * (self.player_sprite.center_y - (self.camera.viewport_height / 2))
-        if screen_center_x < 0:
-            screen_center_x = 0
-        if screen_center_y < 0:
-            screen_center_y = 0
-        player_centered = (screen_center_x, screen_center_y)    
-
-        self.camera.move_to(player_centered, speed)
-
-    def on_update(self,delta_time):
-        self.physics_engine.update()
-
-        if self.physics_engine.can_jump():
-            self.player_sprite.can_jump = False
-        else:
-            self.player_sprite.can_jump = True
-
-        if self.physics_engine.is_on_ladder() and not self.physics_engine.can_jump():
-            self.player_sprite.is_on_ladder = True
-            self.process_keychange()
-        else:
-            self.player_sprite.is_on_ladder = False
-            self.process_keychange()
-
-        self.scene.update_animation(
-            delta_time,
-            [
-                LAYER_NAME_BACKGROUND,
-                LAYER_NAME_CHARACTER,
-                LAYER_NAME_FOREGROUND,
-                LAYER_NAME_ENEMY,
-                LAYER_NAME_CHARACTER,
-                LAYER_NAME_PLAYER
-            ]
-        )
-
-        self.scene.update(
-            [LAYER_NAME_ENEMY,LAYER_NAME_CHARACTER]
-        )

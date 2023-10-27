@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="54" tileheight="54" infinite="0" nextlayerid="26" nextobjectid="7">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="54" tileheight="54" infinite="0" nextlayerid="26" nextobjectid="13">
  <tileset firstgid="1" source="../tiled_object/tilemap_packed.tsx"/>
  <tileset firstgid="181" source="../tiled_object/tilemap_farm_packed.tsx"/>
  <tileset firstgid="293" source="../tiled_object/tilemap-characters_packed.tsx"/>
- <objectgroup id="25" name="Death Zone"/>
+ <objectgroup id="25" name="Death Zone">
+  <object id="10" x="1513" y="512.5" width="214.5" height="27.5"/>
+  <object id="11" x="1513" y="512.5" width="214.5" height="27.5">
+   <polygon points="0,0 214.5,0 214.5,27.5 0,27.5"/>
+  </object>
+  <object id="12" x="1890.25" y="540.333" width="701.75" height="269.667"/>
+ </objectgroup>
  <layer id="15" name="Background" width="60" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,3221225628,1073741979,1073741980,0,0,0,0,0,0,0,0,0,3221225628,1073741979,1073741980,0,0,0,0,0,0,0,3221225628,1073741979,1073741980,0,0,0,0,0,0,0,0,3221225628,1073741979,1073741980,0,0,0,0,0,0,3221225628,1073741979,1073741980,0,0,0,0,0,0,0,
