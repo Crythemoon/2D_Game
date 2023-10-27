@@ -1,15 +1,23 @@
 import os
 import sys
 import arcade
+import arcade.gui
+from arcade.gui.events import UIOnClickEvent
 import level
 from typing import Optional
+import pickle
 
 GAME_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(GAME_DIRECTORY)
 
+SAVE_BINARY = 0
+LEVEL_BINARY = 1
+HEALTH_BINARY = 2
+COIN_BINARY = 3
+
 TILE_SCALLING = 1
 CHARACTER_SCALING = 1
-SPRITE_PIXEL_SIZE = 54
+TILE_PIXEL_SIZE = 54
 
 PLAYER_WALKING_SPEED = 0.5
 PLAYER_RUNNING_SPEED = 1
@@ -24,14 +32,55 @@ LAYER_NAME_BACKGROUND = "Backgrounds"
 LAYER_NAME_ENEMY = "Enemies"
 LAYER_NAME_PLAYER = "Player"
 LAYER_NAME_JUMPABLE_PLATFORM = "Jump Platforms"
-
+        
 class Menu(arcade.View):
-    def on_show_view(self):
+    def __init__(self):
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+
         arcade.set_background_color(arcade.color.WHITE)
-    
-    def on_draw(self):
-        self.clear()
-        arcade
+
+        self.v_box = arcade.gui.UIBoxLayout()
+        
+        new_game_button = arcade.gui.UIFlatButton(text="New Game", width = 200)
+        self.v_box.add(new_game_button.with_space_around(bottom=20))
+
+        continue_button = arcade.gui.UIFlatButton(text="Continue", width=200)
+        with open(f'{GAME_DIRECTORY}\\saves\\save.bin', 'rb') as file:
+            x = pickle.load(file)
+            if x[SAVE_BINARY][1] == 1:
+                self.v_box.add(continue_button.with_space_around(bottom=20))
+            file.close()
+        
+        quit_button = arcade.gui.UIFlatButton(text="Quit",width=200)
+        self.v_box.add(quit_button)
+
+        new_game_button.on_click = self.on_click_newgame
+        continue_button.on_click = self.on_click_continue
+        quit_button.on_click = self.on_click_quit
+
+    def on_click_newgame(self):
+        saves = [
+            ['saves', 0],
+            ['levels', 0],
+            ['health' , 3],
+            ['coin', 0]
+        ]
+        with open(f'{GAME_DIRECTORY}\\saves\\save.bin', 'rb') as file:
+            x = pickle.load(file)
+            if x[SAVE_BINARY][1] == 1:
+                with open(f'{GAME_DIRECTORY}\\saves\\save.bin', 'wb') as file:
+                    pickle.dump(saves,file)
+            file.close()
+        game_view = GameView()
+        self.window.show_view(game_view)
+
+    def on_click_continue(self):
+        game_view = GameView()
+        self.window.show_view(game_view)
+
+    def on_click_quit(self):
+        arcade.exit()
 
 class GameView(arcade.View):
     def __init__(self):
@@ -57,10 +106,15 @@ class GameView(arcade.View):
         self.dynamic_platform_sprite_list: Optional(arcade.SpriteList) = None
         self.platform_sprite_list: Optional(arcade.SpriteList) = None
 
+        self.health = None
+        self.coin = None
+
         self.tile_map = None
         self.scene = None
         
         self.physics_engine: Optional(arcade.PymunkPhysicsEngine)
+
+        self.level_list = (level.level1(),level.level2())
 
         self.level = None
 
@@ -70,34 +124,23 @@ class GameView(arcade.View):
 
         self.gui_camera: Optional(arcade.Camera) = None
 
+    def load_level(self):
+        with open(f'{GAME_DIRECTORY}\\saves\\save.bin', 'rb') as file:
+            x = pickle.load(file)
+            self.level = x[LEVEL_BINARY][1]
+            self.health = x[HEALTH_BINARY][1]
+            self.coin = x[COIN_BINARY][1]
+            file.close()
+
+        self.tile_map = arcade.load_tilemap(self.level_list[self.level].map_path,scaling=TILE_SCALLING)
+
+        self.end_of_map = self.tile_map.width * TILE_PIXEL_SIZE
+        
+
     def setup(self):
         self.camera = arcade.Camera(self.window.width,self.window.height)
         self.gui_camera = arcade.Camera(self.window.width,self.window.height)
 
-        room = level.level_1()
-        self.level_list.append(room)
-
-        self.current_room = 0
-
-        self.tile_map = arcade.load_tilemap(
-            self.level_list[self.current_room].map_path,
-            1,
-            self.level_list[self.current_room].layer_option
-        )
-
-        self.scene = arcade.Scene.from_tilemap(self.tile_map)
-
-        self.scene.add_sprite_list_after(LAYER_NAME_PLAYER,LAYER_NAME_FOREGROUND)
-        
-        self.player_sprite = self.level_list[self.current_room].player_sprite
-        self.scene.add_sprite(LAYER_NAME_PLAYER,self.player_sprite)
-
-        self.physics_engine = arcade.PhysicsEnginePlatformer(
-            self.player_sprite,
-            platforms = self.scene[LAYER_NAME_PLATFORMS],
-            gravity_constant = GRAVITY
-        )
-    
     def on_show_view(self):
         self.setup()
 

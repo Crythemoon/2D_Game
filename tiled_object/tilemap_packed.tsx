@@ -25,6 +25,12 @@
    <frame tileid="75" duration="250"/>
   </animation>
  </tile>
+ <tile id="111">
+  <animation>
+   <frame tileid="111" duration="300"/>
+   <frame tileid="112" duration="300"/>
+  </animation>
+ </tile>
  <tile id="151">
   <animation>
    <frame tileid="151" duration="250"/>
