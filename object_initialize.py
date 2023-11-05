@@ -13,7 +13,10 @@ GAME_OBJECT = os.path.join(GAME_DIRECTORY,'game_object')
 SCREEN_WIDTH = 1680
 SCREEN_HEIGHT = 1080
 
-CHARACTER_SCALING = 1
+CHARACTER_SCALING = 0.8
+
+ENEMY_SCALING = 1
+ENEMY_SPEED = 0.5
 
 def load_texture_pair(file_path):
     return [
@@ -78,12 +81,16 @@ class Player_Model(arcade.Sprite):
             self.texture = self.walking_texture[frame][direction]
 
 class BatEnemy(arcade.Sprite):
-    def __init__(self):
+    def __init__(self,position_list):
         super().__init__()
         self.character_face_direction = LEFT_FACING
         self.cur_texture = 0
+        self.position_list = position_list
+        self.cur_position = 0
+        
+        self.speed = ENEMY_SPEED
 
-        self.scale = CHARACTER_SCALING
+        self.scale = ENEMY_SCALING
 
         main_path = f'{GAME_OBJECT}\\kenney_pixel-platformer\\Tiles\\Characters'
 
@@ -91,6 +98,27 @@ class BatEnemy(arcade.Sprite):
         for i in range(3):
             texture = load_texture_pair(f'{main_path}\\tile_002{i+4}')
             self.all_texture.append(texture)
+
+    def update(self):
+        start_x = self.center_x
+        
+        dest_x = self.position_list[self.cur_position]
+
+        x_diff = dest_x - self.center_x
+
+        speed = min(self.speed,x_diff)
+
+        change_x = speed
+
+        self.center_x += change_x
+
+        x_diff = dest_x - self.center_x
+
+        if x_diff <= speed:
+            self.cur_position += 1
+            
+            if self.cur_position >= len(self.position_list):
+                self.cur_position = 0
         
     def update_animation(self, delta_time: float = 1 / 60):
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
@@ -120,7 +148,7 @@ class BlueRobotEnemy(arcade.Sprite):
         self.character_face_direction = LEFT_FACING
 
         self.cur_texture = 0
-        self.scale = CHARACTER_SCALING
+        self.scale = ENEMY_SCALING
 
         main_path = f'{GAME_OBJECT}\\kenney_pixel-platformer\\Tiles\\Characters'
 
@@ -171,7 +199,7 @@ class RedRobotEnemy(arcade.Sprite):
         self.character_face_direction = LEFT_FACING
 
         self.cur_texture = 0
-        self.scale = CHARACTER_SCALING
+        self.scale = ENEMY_SCALING
 
         main_path = f'{GAME_OBJECT}\\kenney_pixel-platformer\\Tiles\\Characters'
 
