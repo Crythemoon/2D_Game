@@ -89,15 +89,19 @@
  <objectgroup id="19" name="Enemy">
   <object id="3" gid="317" x="1072" y="486" width="72" height="72">
    <properties>
-    <property name="type" value="BatEnemy"/>
+    <property name="type" value="bat_1"/>
    </properties>
   </object>
   <object id="4" gid="308" x="782" y="650" width="72" height="72">
    <properties>
-    <property name="type" value="RedRobotEnemy"/>
+    <property name="type" value="robot_1"/>
    </properties>
   </object>
-  <object id="6" gid="317" x="2798" y="490" width="72" height="72"/>
+  <object id="6" gid="317" x="2798" y="490" width="72" height="72">
+   <properties>
+    <property name="type" value="bat_2"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="18" name="Ladders" width="60" height="15">
   <data encoding="csv">
@@ -176,7 +180,11 @@
 </data>
  </layer>
  <objectgroup id="21" name="NPC">
-  <object id="5" gid="314" x="596" y="596" width="72" height="72"/>
+  <object id="5" gid="314" x="596" y="596" width="72" height="72">
+   <properties>
+    <property name="type" value="tutorial_npc"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="23" name="Flag" width="60" height="15">
   <data encoding="csv">

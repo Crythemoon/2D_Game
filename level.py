@@ -63,6 +63,15 @@ class level1():
 
         self.player_sprite.center_x = 1 * TILE_PIXEL_SIZE
         self.player_sprite.center_y = 6 * TILE_PIXEL_SIZE
+
+        self.enemy_list = None
+    
+    def enemy(self):
+        bat_1 = dict(
+            name = "bat_1",
+            movement = [],
+            hp = 1
+        )
         
 
 class level2():

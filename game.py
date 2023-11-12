@@ -42,11 +42,11 @@ LAYER_NAME_BACKGROUND = "Backgrounds"
 LAYER_NAME_DEATH_ZONE = "Death Zone"
         
 class Menu(arcade.View):
-    def __init__(self):
+    def on_show_view(self):
+        arcade.set_background_color(arcade.color.WHITE)
+
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
-
-        arcade.set_background_color(arcade.color.WHITE)
 
         self.v_box = arcade.gui.UIBoxLayout()
         
@@ -67,7 +67,15 @@ class Menu(arcade.View):
         continue_button.on_click = self.on_click_continue
         quit_button.on_click = self.on_click_quit
 
-    def on_click_newgame(self):
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                anchor_x ="center_x",
+                anchor_y="center_y",
+                child=self.v_box
+            )
+        )
+
+    def on_click_newgame(self,event):
         saves = [
             ['saves', 0],
             ['levels', 0],
@@ -83,12 +91,16 @@ class Menu(arcade.View):
         game_view = GameView()
         self.window.show_view(game_view)
 
-    def on_click_continue(self):
+    def on_click_continue(self,event):
         game_view = GameView()
         self.window.show_view(game_view)
 
-    def on_click_quit(self):
+    def on_click_quit(self,event):
         arcade.exit()
+
+    def on_draw(self):
+        self.clear()
+        self.manager.draw()
 
 class GameView(arcade.View):
     def __init__(self):
@@ -147,10 +159,16 @@ class GameView(arcade.View):
 
         self.camera = arcade.Camera(self.window.width,self.window.height)
         self.gui_camera = arcade.Camera(self.window.width,self.window.height)
+
+        enemy_layer = self.tile_map.object_lists[LAYER_NAME_ENEMY]
+
+        for my_object in enemy_layer:
+            cartesian = self.tile_map.get_cartesian
     
     def load_level(self,level):
 
         layer_option = self.level_list[level].layer_option
         self.tile_map = arcade.load_tilemap(self.level_list[level].map_path,scaling=TILE_SCALLING)
+        
 
         

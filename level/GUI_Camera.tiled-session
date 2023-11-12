@@ -3,15 +3,15 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/map_with_ladders.json",
+    "activeFile": "level_1.tmx",
     "expandedProjectPaths": [
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/setuptools",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade",
         ".",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/setuptools",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env"
@@ -34,8 +34,8 @@
             "scale": 0.4103860294117647,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1308.5240761478162,
-                "y": 1079.471444568869
+                "x": 1005.1511758118702,
+                "y": 1088
             }
         },
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/more_tiles.json": {
@@ -136,15 +136,15 @@
         },
         "level_1.tmx": {
             "expandedObjectLayers": [
-                19,
+                21,
                 25,
-                21
+                19
             ],
             "scale": 0.5,
-            "selectedLayer": 0,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 908,
-                "y": 674
+                "x": 960,
+                "y": 672
             }
         },
         "level_1.tmx#tilemap_packed": {
@@ -162,8 +162,8 @@
     ],
     "project": "GUI_Camera.tiled-project",
     "recentFiles": [
-        "level_1.tmx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/map_with_ladders.json",
+        "level_1.tmx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/kenney_pixel-platformer/Tiled/tilemap-example-a.tmx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_map_7.json",
