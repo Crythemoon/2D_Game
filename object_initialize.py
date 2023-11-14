@@ -98,27 +98,6 @@ class BatEnemy(arcade.Sprite):
         for i in range(3):
             texture = load_texture_pair(f'{main_path}\\tile_002{i+4}')
             self.all_texture.append(texture)
-
-    def update(self):
-        start_x = self.center_x
-        
-        dest_x = self.position_list[self.cur_position]
-
-        x_diff = dest_x - self.center_x
-
-        speed = min(self.speed,x_diff)
-
-        change_x = speed
-
-        self.center_x += change_x
-
-        x_diff = dest_x - self.center_x
-
-        if x_diff <= speed:
-            self.cur_position += 1
-            
-            if self.cur_position >= len(self.position_list):
-                self.cur_position = 0
         
     def update_animation(self, delta_time: float = 1 / 60):
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
