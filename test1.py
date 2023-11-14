@@ -4,11 +4,13 @@ import arcade
 import arcade.gui
 from arcade.gui.events import UIOnClickEvent
 import level
+import object_initialize
 from typing import Optional
 import pickle
 
 GAME_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(GAME_DIRECTORY)
+GAME_SAVES = os.path.join(GAME_DIRECTORY,'saves')
 
 WINDOW_WIDTH = 1620
 WINDOW_HEIGHT = 810
@@ -62,23 +64,32 @@ class GameView(arcade.View):
         self.level_list = [level.level1]
 
     def load_level(self):
-        with open(f'{GAME_DIRECTORY}\\saves\\saves.bin', 'rb') as file:
+        with open(f'{GAME_SAVES}\\save.bin', 'rb') as file:
             x = pickle.load(file)
-            self.level_number = x[LEVEL_BINARY][1] - 1
-            self.health = x[HEALTH_BINARY][1] - 1
+            self.level_number = x[LEVEL_BINARY][1]
+            self.health = x[HEALTH_BINARY][1]
             self.coin = x[COIN_BINARY][1]
             file.close()
         
         self.level = self.level_list[self.level_number]
 
     def setup(self):
-        self.load_level
+        self.load_level()
         layer_option = self.level.layer_option
         self.tile_map = arcade.load_tilemap(map_file=self.level.map_path,scaling=TILE_SCALLING,layer_options=layer_option)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
+        enemies_layer = self.tile_map.object_lists[LAYER_NAME_ENEMY]
+        for my_object in enemies_layer:
+            cartesians = self.tile_map.get_cartesian(
+                my_object.shape[0],my_object.shape[1]
+            )
+            enemy_type = my_object.properties["type"]
+            if enemy_type == "bat":
+                enemy = object_initialize.BatEnemy()
+
     def on_show_view(self):
-        self.setup
+        self.setup()
 
     def on_draw(self):
         self.clear()

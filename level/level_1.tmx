@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="54" tileheight="54" infinite="0" nextlayerid="26" nextobjectid="13">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="54" tileheight="54" infinite="0" nextlayerid="26" nextobjectid="20">
  <tileset firstgid="1" source="../tiled_object/tilemap_packed.tsx"/>
  <tileset firstgid="181" source="../tiled_object/tilemap_farm_packed.tsx"/>
  <tileset firstgid="293" source="../tiled_object/tilemap-characters_packed.tsx"/>
@@ -87,20 +87,23 @@
 </data>
  </layer>
  <objectgroup id="19" name="Enemy">
-  <object id="3" gid="317" x="1072" y="486" width="72" height="72">
+  <object id="17" x="1106" y="484">
    <properties>
-    <property name="type" value="bat_1"/>
+    <property name="type" value="bat"/>
    </properties>
+   <point/>
   </object>
-  <object id="4" gid="308" x="782" y="650" width="72" height="72">
+  <object id="18" x="832" y="646">
    <properties>
-    <property name="type" value="robot_1"/>
+    <property name="type" value="bat"/>
    </properties>
+   <point/>
   </object>
-  <object id="6" gid="317" x="2798" y="490" width="72" height="72">
+  <object id="19" x="2834" y="484">
    <properties>
-    <property name="type" value="bat_2"/>
+    <property name="type" value="bat"/>
    </properties>
+   <point/>
   </object>
  </objectgroup>
  <layer id="18" name="Ladders" width="60" height="15">
