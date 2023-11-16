@@ -5,6 +5,7 @@ import arcade.gui
 from arcade.gui.events import UIOnClickEvent
 import level
 import object_initialize
+import math
 from typing import Optional
 import pickle
 
@@ -87,7 +88,20 @@ class GameView(arcade.View):
             enemy_type = my_object.properties["type"]
             if enemy_type == "bat":
                 enemy = object_initialize.BatEnemy()
+            enemy.center_x = math.floor(
+                (cartesians[0] * TILE_SCALLING * self.tile_map.tile_width)
+            )
+            enemy.center_y = math.floor(
+                (cartesians[1] + 1) * TILE_SCALLING * self.tile_map.tile_height
+            )
 
+            if "boundary_left" in my_object.properties:
+                enemy.boundary_left = my_object.properties["boundary_left"]
+            if "boundary_right" in my_object.properties:
+                enemy.boundary_right = my_object.properties["boundary_right"]
+            if "change_x" in my_object.properties:
+                enemy.change_x = my_object.properties["change_x"]
+            self.scene.add_sprite(LAYER_NAME_ENEMY,enemy)
     def on_show_view(self):
         self.setup()
 
@@ -95,6 +109,22 @@ class GameView(arcade.View):
         self.clear()
         self.scene.draw()
 
+    def on_update(self,delta_time):
+        self.scene.update_animation(
+            delta_time,
+            [
+                LAYER_NAME_ENEMY
+            ]
+        )
+
+        self.scene.update(
+            names=[LAYER_NAME_ENEMY]
+        )
+        for enemy in self.scene[LAYER_NAME_ENEMY]:
+            if enemy.right > enemy.boundary_right and enemy.change_x > 0:
+                enemy.change_x *= -1
+            if enemy.left > enemy.boundary_left and enemy.change_x < 0:
+                enemy.change_x *= -1
 
 def main():
     window = arcade.Window(width=WINDOW_WIDTH,height=WINDOW_HEIGHT,title="Test")

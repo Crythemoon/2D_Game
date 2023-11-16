@@ -89,21 +89,27 @@
  <objectgroup id="19" name="Enemy">
   <object id="17" x="1106" y="484">
    <properties>
+    <property name="boundary_left" type="int" value="0"/>
+    <property name="boundary_right" type="int" value="0"/>
+    <property name="change_x" type="int" value="0"/>
     <property name="type" value="bat"/>
    </properties>
    <point/>
   </object>
   <object id="18" x="832" y="646">
    <properties>
-    <property name="boundary_left" value=""/>
-    <property name="boundary_right" value=""/>
-    <property name="change_x" value="1"/>
+    <property name="boundary_left" type="int" value="756"/>
+    <property name="boundary_right" type="int" value="918"/>
+    <property name="change_x" type="int" value="1"/>
     <property name="type" value="bat"/>
    </properties>
    <point/>
   </object>
   <object id="19" x="2834" y="484">
    <properties>
+    <property name="boundary_left" type="int" value="0"/>
+    <property name="boundary_right" type="int" value="0"/>
+    <property name="change_x" type="int" value="0"/>
     <property name="type" value="bat"/>
    </properties>
    <point/>

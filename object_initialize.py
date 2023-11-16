@@ -56,8 +56,6 @@ class Player_Model(arcade.Sprite):
 
         self.jumping_texture = []
         
-
-
     def update_animation(self,delta_time: float = 1 / 60):
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
             self.character_face_direction = LEFT_FACING
@@ -74,18 +72,17 @@ class Player_Model(arcade.Sprite):
 
         if self.change_x != 0 and self.change_y == 0:
             self.cur_texture += 1
-            if self.cur_texture > 3 * UPDATE_PER_FRAME:
+            if self.cur_texture >= 4 * UPDATE_PER_FRAME:
                 self.cur_texture = 0
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
             self.texture = self.walking_texture[frame][direction]
 
 class BatEnemy(arcade.Sprite):
-    def __init__(self,position_list):
+    def __init__(self):
         super().__init__()
         self.character_face_direction = LEFT_FACING
         self.cur_texture = 0
-        self.position_list = position_list
         self.cur_position = 0
         
         self.speed = ENEMY_SPEED
@@ -96,7 +93,7 @@ class BatEnemy(arcade.Sprite):
 
         self.all_texture = []
         for i in range(3):
-            texture = load_texture_pair(f'{main_path}\\tile_002{i+4}')
+            texture = load_texture_pair(f'{main_path}\\tile_002{i+4}.png')
             self.all_texture.append(texture)
         
     def update_animation(self, delta_time: float = 1 / 60):
@@ -107,7 +104,7 @@ class BatEnemy(arcade.Sprite):
 
         if self.change_x == 0 and self.change_y == 0:
             self.cur_texture += 1
-            if self.cur_texture > 3 * UPDATE_PER_FRAME:
+            if self.cur_texture >= 3 * UPDATE_PER_FRAME:
                 self.cur_texture = 0
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
@@ -115,9 +112,9 @@ class BatEnemy(arcade.Sprite):
 
         if self.change_x != 0 and self.change_y == 0:
             self.cur_texture += 1
-            if self.cur_texture > 3 * UPDATE_PER_FRAME:
+            if self.cur_texture >= 3 * UPDATE_PER_FRAME:
                 self.cur_texture = 0
-            frame = self.cur_texture // 3
+            frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
             self.texture = self.all_texture[frame][direction]
 
