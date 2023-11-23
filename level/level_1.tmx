@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="54" tileheight="54" infinite="0" nextlayerid="26" nextobjectid="20">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="54" tileheight="54" infinite="0" nextlayerid="27" nextobjectid="20">
  <tileset firstgid="1" source="../tiled_object/tilemap_packed.tsx"/>
  <tileset firstgid="181" source="../tiled_object/tilemap_farm_packed.tsx"/>
  <tileset firstgid="293" source="../tiled_object/tilemap-characters_packed.tsx"/>
@@ -96,10 +96,10 @@
    </properties>
    <point/>
   </object>
-  <object id="18" x="832" y="646">
+  <object id="18" x="830" y="648">
    <properties>
     <property name="boundary_left" type="int" value="756"/>
-    <property name="boundary_right" type="int" value="918"/>
+    <property name="boundary_right" type="int" value="864"/>
     <property name="change_x" type="int" value="1"/>
     <property name="type" value="bat"/>
    </properties>

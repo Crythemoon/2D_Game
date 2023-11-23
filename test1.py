@@ -38,13 +38,13 @@ LAYER_NAME_FLAG = "Flag"
 LAYER_NAME_NPC = "NPC"
 LAYER_NAME_COIN = "Coin"
 LAYER_NAME_HEART = "Heart"
-LAYER_NAME_FOREGROUND = "Foregrounds"
+LAYER_NAME_FOREGROUND = "Foreground"
 LAYER_NAME_LADDER = "Ladders"
 LAYER_NAME_ENEMY = "Enemy"
 LAYER_NAME_DYNAMIC_PLATFORM = "Dynamic Platforms"
 LAYER_NAME_PLATFORMS_B = "Platforms B"
 LAYER_NAME_PLATFORMS_A = "Platforms A"
-LAYER_NAME_BACKGROUND = "Backgrounds"
+LAYER_NAME_BACKGROUND = "Background"
 LAYER_NAME_DEATH_ZONE = "Death Zone"
 
 class GameView(arcade.View):
@@ -102,6 +102,7 @@ class GameView(arcade.View):
             if "change_x" in my_object.properties:
                 enemy.change_x = my_object.properties["change_x"]
             self.scene.add_sprite(LAYER_NAME_ENEMY,enemy)
+
     def on_show_view(self):
         self.setup()
 
@@ -113,8 +114,9 @@ class GameView(arcade.View):
         self.scene.update_animation(
             delta_time,
             [
-                LAYER_NAME_ENEMY
-            ]
+                LAYER_NAME_ENEMY,
+                LAYER_NAME_NPC
+            ],
         )
 
         self.scene.update(
@@ -123,7 +125,7 @@ class GameView(arcade.View):
         for enemy in self.scene[LAYER_NAME_ENEMY]:
             if enemy.right > enemy.boundary_right and enemy.change_x > 0:
                 enemy.change_x *= -1
-            if enemy.left > enemy.boundary_left and enemy.change_x < 0:
+            if enemy.left < enemy.boundary_left and enemy.change_x < 0:
                 enemy.change_x *= -1
 
 def main():
