@@ -114,8 +114,7 @@ class GameView(arcade.View):
         self.scene.update_animation(
             delta_time,
             [
-                LAYER_NAME_ENEMY,
-                LAYER_NAME_NPC
+                LAYER_NAME_ENEMY
             ],
         )
 

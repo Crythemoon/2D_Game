@@ -96,6 +96,15 @@ class BatEnemy(arcade.Sprite):
             texture = load_texture_pair(f'{main_path}\\tile_002{i+4}.png')
             self.all_texture.append(texture)
         
+        self.set_hit_box(
+            [
+                [-32,-32],
+                [-32,32],
+                [32,-32],
+                [32,32]
+            ]
+        )
+        
     def update_animation(self, delta_time: float = 1 / 60):
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
             self.character_face_direction = LEFT_FACING
