@@ -55,6 +55,8 @@ class Player_Model(arcade.Sprite):
             self.walking_texture.append(texture)
 
         self.jumping_texture = []
+
+        self.set_hit_box([[-48,-48],[-48,48],[48,-48],[48,48]])
         
     def update_animation(self,delta_time: float = 1 / 60):
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
@@ -64,7 +66,7 @@ class Player_Model(arcade.Sprite):
 
         if self.change_x == 0 and self.change_y == 0:
             self.cur_texture += 1
-            if self.cur_texture > 4 * UPDATE_PER_FRAME:
+            if self.cur_texture >= 5 * UPDATE_PER_FRAME:
                 self.cur_texture = 0
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
