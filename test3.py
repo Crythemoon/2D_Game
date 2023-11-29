@@ -1,3 +1,5 @@
-import level
+import pickle
+import os
 
-print(level.level1.map_path)
+GAME_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
+SAVES_DIRECTORY = os.path.join(GAME_DIRECTORY,)

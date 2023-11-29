@@ -46,6 +46,7 @@ LAYER_NAME_PLATFORMS_B = "Platforms B"
 LAYER_NAME_PLATFORMS_A = "Platforms A"
 LAYER_NAME_BACKGROUND = "Background"
 LAYER_NAME_DEATH_ZONE = "Death Zone"
+LAYER_NAME_PLAYER = "Player"
 
 class GameView(arcade.View):
     def __init__(self):
@@ -64,6 +65,12 @@ class GameView(arcade.View):
 
         self.level_list = [level.level1]
 
+        self.player_sprite_list = None
+
+        self.camera = None
+        
+        self.gui_camera = None
+
     def load_level(self):
         with open(f'{GAME_SAVES}\\save.bin', 'rb') as file:
             x = pickle.load(file)
@@ -76,6 +83,11 @@ class GameView(arcade.View):
 
     def setup(self):
         self.load_level()
+
+        self.camera = arcade.Camera(self.window.width, self.window.height)
+
+        self.gui_camera = arcade.Camera(self.window.width, self.window.height)
+
         layer_option = self.level.layer_option
         self.tile_map = arcade.load_tilemap(map_file=self.level.map_path,scaling=TILE_SCALLING,layer_options=layer_option)
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -102,6 +114,14 @@ class GameView(arcade.View):
             if "change_x" in my_object.properties:
                 enemy.change_x = my_object.properties["change_x"]
             self.scene.add_sprite(LAYER_NAME_ENEMY,enemy)
+        
+        self.player_sprite_list = arcade.SpriteList()
+        player_sprite = object_initialize.Player_Model()
+        player_sprite.center_x = self.level.player_sprite_center_x
+        player_sprite.center_y = self.level.player_sprite_center_y
+        self.player_sprite_list.append(player_sprite)
+
+        self.scene.add_sprite_list_after(LAYER_NAME_PLAYER,LAYER_NAME_LADDER,sprite_list=self.player_sprite_list)
 
     def on_show_view(self):
         self.setup()

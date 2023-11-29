@@ -58,10 +58,9 @@ class level1():
             'use_spatial_hash': True
         }
     }
-    player_sprite = object_initialize.Player_Model()
 
-    player_sprite.center_x = 1 * TILE_PIXEL_SIZE
-    player_sprite.center_y = 6 * TILE_PIXEL_SIZE
+    player_sprite_center_x = 1 * TILE_PIXEL_SIZE
+    player_sprite_center_y = 6 * TILE_PIXEL_SIZE
         
 
 class level2():
