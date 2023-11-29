@@ -45,8 +45,8 @@
             "scale": 0.41,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 1039.0243902439024,
-                "y": 1063.4146341463415
+                "x": 1036.5853658536585,
+                "y": 1060.9756097560976
             }
         },
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/more_tiles.json": {
@@ -168,8 +168,8 @@
             "scale": 0.5,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": 1356,
-                "y": 1010
+                "x": 1620,
+                "y": 405
             }
         },
         "level_1.tmx#tilemap_packed": {
