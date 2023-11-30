@@ -6,6 +6,10 @@ import os
 
 RIGHT_FACING = 0
 LEFT_FACING = 1
+UP_FACING = 0
+DOWN_FACING = 1
+IDLE_FACING = 3
+
 UPDATE_PER_FRAME = 20
 GAME_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 GAME_OBJECT = os.path.join(GAME_DIRECTORY,'game_object')
@@ -42,6 +46,7 @@ class Player_Model(arcade.Sprite):
         self.running = False
         self.jumping = False
         self.attacking = False
+        self.dashing = False
         self.is_on_ladder = False
 
         self.idle_texture = []  #idle animation
@@ -58,28 +63,22 @@ class Player_Model(arcade.Sprite):
             texture = load_texture_pair(f'{main_path}\\walking_animation_000{i+1}.png')
             self.walking_texture.append(texture)
 
+        self.running_texture = []
+        for i in range(8):
+            texture = load_texture_pair(f'{main_path}\\running_animation_000{i+1}.png')
+            self.running_texture.append(texture)
+        
         self.jumping_texture = []
-        for i in range(4):
+        for i in range(8):
             texture = load_texture_pair(f'{main_path}\\jumping_animation_000{i+1}.png')
             self.jumping_texture.append(texture)
 
+        self.climbing_texture = []
+        for i in ('up','down'):
+            texture = load_texture_pair(f'{main_path}\\climbing_{i}_animation.png')
+        self.climbing_texture.append(load_texture_pair(f'{main_path}\\idle_animation_0001.png'))
+
         self.set_hit_box([[-48,-48],[-48,48],[48,-48],[48,48]])
-    
-    def on_update(self, delta_time: float = 1 / 60):
-        if not self.is_on_ladder and self.change_y > 0:         #JUMPING UPDATES
-            self.jumping = True
-        elif not self.is_on_ladder and self.change_y == 0:
-            self.jumping = False
-
-        if self.change_x == PLAYER_WALKING_SPEED:           #WALKING AND RUNNING UPDATES    
-            self.walking = True
-        elif self.change_x == PLAYER_RUNNING_SPEED:
-            self.running = True
-        elif self.change_x == 0:
-            self.walking = False
-            self.running = False
-
-        
 
     def update_animation(self,delta_time: float = 1 / 60):
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
@@ -87,7 +86,7 @@ class Player_Model(arcade.Sprite):
         elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
             self.character_face_direction = RIGHT_FACING
 
-        if self.change_x == 0 and self.change_y == 0:
+        if self.change_x == 0 and self.change_y == 0 and not self.is_on_ladder:
             self.cur_texture += 1
             if self.cur_texture >= 5 * UPDATE_PER_FRAME:
                 self.cur_texture = 0
@@ -95,21 +94,41 @@ class Player_Model(arcade.Sprite):
             direction = self.character_face_direction
             self.texture = self.idle_texture[frame][direction]
 
-        if self.walking:
+        if self.walking and not self.is_on_ladder:
             self.cur_texture += 1
-            if self.cur_texture >= 5 * UPDATE_PER_FRAME:
+            if self.cur_texture >= 4 * UPDATE_PER_FRAME:
                 self.cur_texture = 0
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
             self.texture = self.walking_texture[frame][direction]
 
-        if self.jumping:
+        if self.running and not self.is_on_ladder:
             self.cur_texture += 1
-            if self.cur_texture >= 5:
+            if self.cur_texture >= 8:
+                self.cur_texture = 0
+            frame = self.cur_texture // UPDATE_PER_FRAME
+            direction = self.character_face_direction
+            self.texture = self.running_texture[frame][direction]
+
+        if self.is_on_ladder:
+            direction = self.character_face_direction
+            if self.change_y > 0:
+                self.texture = self.climbing_texture[UP_FACING][direction]
+            elif self.change_y < 0:
+                self.texture = self.climbing_texture[DOWN_FACING][direction]
+            else:
+                self.texture = self.climbing_texture[IDLE_FACING][direction]
+
+        if self.jumping and not self.is_on_ladder:
+            self.cur_texture += 1
+            if self.cur_texture >= 8:
                 self.cur_texture = 0
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
             self.texture = self.jumping_texture[frame][direction]
+        
+        if self.dashing:
+            self.texture = None
 
 
 class BatEnemy(arcade.Sprite):

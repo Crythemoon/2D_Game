@@ -28,11 +28,16 @@ TILE_PIXEL_SIZE = 54
 SCREEN_TILES_WIDTH = 30
 SCREEN_TILES_HEIGHT = 15
 
+UPDATE_PER_FRAME = 20
+
 PLAYER_WALKING_SPEED = 0.5
 PLAYER_RUNNING_SPEED = 1
 PLAYER_CLIMBING_SPEED = 0.5
 PLAYER_JUMP_SPEED = 10
 PLAYER_DASH_SPEED = 10
+
+RIGHT = True
+LEFT = False
 
 GRAVITY = 2
 
@@ -68,7 +73,7 @@ class GameView(arcade.View):
 
         self.player_sprite_list = None
         self.player_sprite = None
-        self.player_face_right = True
+        self.player_direction = RIGHT
 
         self.camera = None
         
@@ -87,7 +92,10 @@ class GameView(arcade.View):
         self.dash_needs_reset = False
 
         self.time_since_last_dash = 0.0
-        self.time_between_dash = 2.0
+        self.time_between_dash = 4.0
+
+        self.time_since_last_attack = 0.0
+        self.time_between_attack = 3.0
 
         self.physics_engine = None
 
@@ -198,16 +206,12 @@ class GameView(arcade.View):
         
         if self.right_pressed and not self.left_pressed:            #MOVING KEYCHANGE
             self.player_sprite.change_x = player_speed
-            self.player_face_right = True
         elif not self.right_pressed and self.left_pressed:
             self.player_sprite.change_x = -player_speed
-            self.player_face_right = False
-        else:
-            self.player_sprite.change_x = 0
 
         if (                            #DASHING KEYCHANGE
             self.f_pressed
-            and self.player_face_right
+            and self.player_direction == RIGHT
             and not self.dash_needs_reset
         ):
             self.player_sprite.center_x = self.player_sprite.center_x + PLAYER_DASH_SPEED
@@ -215,7 +219,7 @@ class GameView(arcade.View):
 
         if (
             self.f_pressed
-            and not self.player_face_right
+            and self.player_direction == LEFT
             and not self.dash_needs_reset
         ):
             self.player_sprite.center_x = self.player_sprite.center_x - PLAYER_DASH_SPEED
@@ -280,6 +284,8 @@ class GameView(arcade.View):
     def on_update(self,delta_time: float = 1/60):
         self.physics_engine.update()
 
+        self.process_keychange
+
         if self.dash_needs_reset:
             self.time_between_dash += delta_time
             if self.time_between_dash >= self.time_since_last_dash:
@@ -293,7 +299,30 @@ class GameView(arcade.View):
             self.player_sprite.is_on_ladder = False
             self.process_keychange()
 
-        self.scene.update_animation(
+        if self.player_sprite.change_x < 0:
+            self.player_direction = LEFT
+        elif self.player_sprite.change_x > 0:
+            self.player_direction = RIGHT
+        
+        if not self.physics_engine.is_on_ladder and self.player_sprite.change_y > 0:        #PLAYER ANIMATION UPDATE
+            self.player_sprite.jumping = True
+        if self.player_sprite.change_y == 0:
+            self.player_sprite.jumping = False
+
+        if self.player_sprite.change_x == PLAYER_WALKING_SPEED and not self.player_sprite.jumping:
+            self.player_sprite.walking = True
+        elif self.player_sprite.change_x == PLAYER_RUNNING_SPEED and not self.player_sprite.jumping:
+            self.player_sprite.running = True
+        elif self.player_sprite.change_x == 0 and not self.player_sprite.jumping:
+            self.player_sprite.walking = False
+            self.player_sprite.running = False
+
+        if self.dash_needs_reset:
+            self.player_sprite.dashing = True
+        else:
+            self.player_sprite.dashing = False
+
+        self.scene.update_animation(                #SCENE ANIMATION UPDATE
             delta_time,
             [
                 LAYER_NAME_ENEMY,
