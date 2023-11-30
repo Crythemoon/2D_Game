@@ -279,12 +279,7 @@ class GameView(arcade.View):
 
     def on_update(self,delta_time: float = 1/60):
         self.physics_engine.update()
-        
-        if self.physics_engine.can_jump():
-            self.player_sprite.can_jump = False
-        else:
-            self.player_sprite.can_jump = True
-        
+
         if self.dash_needs_reset:
             self.time_between_dash += delta_time
             if self.time_between_dash >= self.time_since_last_dash:

@@ -15,6 +15,9 @@ SCREEN_HEIGHT = 1080
 
 CHARACTER_SCALING = 0.8
 
+PLAYER_WALKING_SPEED = 0.5
+PLAYER_RUNNING_SPEED = 1
+
 ENEMY_SCALING = 1
 ENEMY_SPEED = 0.5
 
@@ -35,9 +38,10 @@ class Player_Model(arcade.Sprite):
 
         main_path = f'{GAME_OBJECT}\\character'
 
-        self.is_idle = True
+        self.walking = False
+        self.running = False
         self.jumping = False
-        self.climbing = False
+        self.attacking = False
         self.is_on_ladder = False
 
         self.idle_texture = []  #idle animation
@@ -55,9 +59,28 @@ class Player_Model(arcade.Sprite):
             self.walking_texture.append(texture)
 
         self.jumping_texture = []
+        for i in range(4):
+            texture = load_texture_pair(f'{main_path}\\jumping_animation_000{i+1}.png')
+            self.jumping_texture.append(texture)
 
         self.set_hit_box([[-48,-48],[-48,48],[48,-48],[48,48]])
+    
+    def on_update(self, delta_time: float = 1 / 60):
+        if not self.is_on_ladder and self.change_y > 0:         #JUMPING UPDATES
+            self.jumping = True
+        elif not self.is_on_ladder and self.change_y == 0:
+            self.jumping = False
+
+        if self.change_x == PLAYER_WALKING_SPEED:           #WALKING AND RUNNING UPDATES    
+            self.walking = True
+        elif self.change_x == PLAYER_RUNNING_SPEED:
+            self.running = True
+        elif self.change_x == 0:
+            self.walking = False
+            self.running = False
+
         
+
     def update_animation(self,delta_time: float = 1 / 60):
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
             self.character_face_direction = LEFT_FACING
@@ -72,13 +95,22 @@ class Player_Model(arcade.Sprite):
             direction = self.character_face_direction
             self.texture = self.idle_texture[frame][direction]
 
-        if self.change_x != 0 and self.change_y == 0:
+        if self.walking:
             self.cur_texture += 1
-            if self.cur_texture >= 4 * UPDATE_PER_FRAME:
+            if self.cur_texture >= 5 * UPDATE_PER_FRAME:
                 self.cur_texture = 0
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
             self.texture = self.walking_texture[frame][direction]
+
+        if self.jumping:
+            self.cur_texture += 1
+            if self.cur_texture >= 5:
+                self.cur_texture = 0
+            frame = self.cur_texture // UPDATE_PER_FRAME
+            direction = self.character_face_direction
+            self.texture = self.jumping_texture[frame][direction]
+
 
 class BatEnemy(arcade.Sprite):
     def __init__(self):
