@@ -127,8 +127,6 @@ class Player_Model(arcade.Sprite):
             direction = self.character_face_direction
             self.texture = self.jumping_texture[frame][direction]
         
-        if self.dashing:
-            self.texture = None
 
 
 class BatEnemy(arcade.Sprite):
