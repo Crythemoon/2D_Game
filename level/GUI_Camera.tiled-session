@@ -6,16 +6,16 @@
     "activeFile": "level_1.tmx",
     "expandedProjectPaths": [
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources",
-        ".",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/setuptools",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/setuptools",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env"
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -162,14 +162,14 @@
         "level_1.tmx": {
             "expandedObjectLayers": [
                 21,
-                19,
-                25
+                25,
+                19
             ],
             "scale": 0.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1150,
-                "y": 994
+                "x": 508,
+                "y": 672
             }
         },
         "level_1.tmx#tilemap_packed": {

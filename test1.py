@@ -49,7 +49,7 @@ LAYER_NAME_FOREGROUND = "Foreground"
 LAYER_NAME_LADDER = "Ladders"
 LAYER_NAME_ENEMY = "Enemy"
 LAYER_NAME_DYNAMIC_PLATFORM = "Dynamic Platforms"
-LAYER_NAME_PLATFORMS_A = "Platforms A"
+LAYER_NAME_PLATFORM = "Platforms"
 LAYER_NAME_BACKGROUND = "Background"
 LAYER_NAME_DEATH_ZONE = "Death Zone"
 LAYER_NAME_PLAYER = "Player"
@@ -162,7 +162,7 @@ class GameView(arcade.View):
             platforms = self.scene[LAYER_NAME_DYNAMIC_PLATFORM],
             gravity_constant = GRAVITY,
             ladders = self.scene[LAYER_NAME_LADDER],
-            walls = self.scene[LAYER_NAME_PLATFORMS_A]
+            walls = self.scene[LAYER_NAME_PLATFORM]
         )
 
     def on_show_view(self):
@@ -298,24 +298,6 @@ class GameView(arcade.View):
             self.player_sprite.is_on_ladder = True
         else:
             self.player_sprite.is_on_ladder = False
-
-        if self.player_sprite.change_x < 0:
-            self.player_direction = LEFT
-        elif self.player_sprite.change_x > 0:
-            self.player_direction = RIGHT
-        
-        if not self.physics_engine.is_on_ladder and self.player_sprite.change_y > 0:        #PLAYER ANIMATION UPDATE
-            self.player_sprite.jumping = True
-        if self.player_sprite.change_y == 0:
-            self.player_sprite.jumping = False
-
-        if self.player_sprite.change_x == PLAYER_WALKING_SPEED and not self.player_sprite.jumping:
-            self.player_sprite.walking = True
-        elif self.player_sprite.change_x == PLAYER_RUNNING_SPEED and not self.player_sprite.jumping:
-            self.player_sprite.running = True
-        elif self.player_sprite.change_x == 0 and not self.player_sprite.jumping:
-            self.player_sprite.walking = False
-            self.player_sprite.running = False
 
         if self.dash_needs_reset:
             self.player_sprite.dashing = True
