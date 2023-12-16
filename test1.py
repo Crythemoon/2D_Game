@@ -151,7 +151,11 @@ class GameView(arcade.View):
 
         self.player_sprite_list.append(self.player_sprite)
 
-        self.scene.add_sprite_list_after(name= LAYER_NAME_PLAYER,after=LAYER_NAME_LADDER,sprite_list=self.player_sprite_list)
+        self.scene.add_sprite_list_after(
+            name= LAYER_NAME_PLAYER,
+            after=LAYER_NAME_LADDER,
+            sprite_list=self.player_sprite_list
+            )
 
         self.physics_engine = arcade.PhysicsEnginePlatformer(
             self.player_sprite,
@@ -284,20 +288,16 @@ class GameView(arcade.View):
     def on_update(self,delta_time: float = 1/60):
         self.physics_engine.update()
 
-        self.process_keychange
-
         if self.dash_needs_reset:
-            self.time_between_dash += delta_time
-            if self.time_between_dash >= self.time_since_last_dash:
-                self.time_between_dash = 0.0
+            self.time_since_last_dash += delta_time
+            if self.time_since_last_dash >= self.time_between_dash:
+                self.time_since_last_dash = 0.0
                 self.dash_needs_reset = False
 
         if self.physics_engine.is_on_ladder and not self.physics_engine.can_jump:
             self.player_sprite.is_on_ladder = True
-            self.process_keychange()
         else:
             self.player_sprite.is_on_ladder = False
-            self.process_keychange()
 
         if self.player_sprite.change_x < 0:
             self.player_direction = LEFT
