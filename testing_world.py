@@ -29,7 +29,6 @@ class GameView(arcade.View):
         self.tile_map = None
         self.scene = None
 
-        self.player_sprite_list = None
         self.player_sprite = None
 
         self.camera = None
@@ -74,17 +73,10 @@ class GameView(arcade.View):
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
         self.player_sprite = object_initialize.Player_Model()
-        self.player_sprite.center_x = 1 * TILE_SIZE
+        self.player_sprite.center_x = 4 * TILE_SIZE
         self.player_sprite.center_y = 4 * TILE_SIZE
 
-        self.player_sprite_list = arcade.SpriteList()
-        self.player_sprite_list.append(self.player_sprite)
-
-        self.scene.add_sprite_list_after(
-            name= LAYER_NAME_PLAYER,
-            after= LAYER_NAME_PLATFORM,
-            sprite_list= self.player_sprite_list
-        )
+        self.scene.add_sprite(LAYER_NAME_PLAYER,self.player_sprite)
 
         self.physics_engine = arcade.PhysicsEnginePlatformer(
             self.player_sprite,
@@ -93,6 +85,7 @@ class GameView(arcade.View):
         )
     
     def on_show_view(self):
+        arcade.set_background_color(arcade.color.WHITE)
         self.setup()
 
     def on_draw(self):
