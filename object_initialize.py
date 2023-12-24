@@ -42,6 +42,7 @@ class Player_Model(arcade.Sprite):
 
         main_path = f'{GAME_OBJECT}\\character'
 
+        self.idle = False
         self.walking = False
         self.running = False
         self.jumping = False
@@ -79,6 +80,20 @@ class Player_Model(arcade.Sprite):
         self.climbing_texture.append(load_texture_pair(f'{main_path}\\idle_animation_0001.png'))
 
         self.set_hit_box([[-48,-48],[-48,48],[48,-48],[48,48]])
+
+    def on_update(self, delta_time: float = 1 / 60):
+        if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+            self.character_face_direction = LEFT_FACING
+        elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
+            self.character_face_direction = RIGHT_FACING
+
+        if self.change_x == 0 and self.change_y == 0:
+            self.idle = True
+        elif self.change_x != 0 or self.change_y != 0:
+            self.idle = False
+        elif self.change_x == PLAYER_WALKING_SPEED and self.change_y == 0:
+            self.walking = True
+        elif self.change
 
     def update_animation(self,delta_time: float = 1 / 60):
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
@@ -126,6 +141,8 @@ class Player_Model(arcade.Sprite):
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
             self.texture = self.jumping_texture[frame][direction]
+
+        
         
 
 

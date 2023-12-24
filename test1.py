@@ -286,7 +286,7 @@ class GameView(arcade.View):
         player_center = (screen_center_x,screen_center_y)
         self.camera.move_to(player_center)
 
-    def on_update(self,delta_time: float = 1/60):
+    def on_update(self,delta_time):
         self.physics_engine.update()
 
         if self.dash_needs_reset:
