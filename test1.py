@@ -317,7 +317,10 @@ class GameView(arcade.View):
         )
 
         self.scene.update(
-            names=[LAYER_NAME_ENEMY]
+            names=[
+                LAYER_NAME_ENEMY,
+                LAYER_NAME_PLAYER
+                ]
         )
         for enemy in self.scene[LAYER_NAME_ENEMY]:
             if enemy.right > enemy.boundary_right and enemy.change_x > 0:

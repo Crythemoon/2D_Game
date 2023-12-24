@@ -89,19 +89,27 @@ class Player_Model(arcade.Sprite):
 
         if self.change_x == 0 and self.change_y == 0:
             self.idle = True
+            self.walking = False
+            self.running = False
+            self.jumping = False
         elif self.change_x != 0 or self.change_y != 0:
             self.idle = False
         elif self.change_x == PLAYER_WALKING_SPEED and self.change_y == 0:
             self.walking = True
-        elif self.change
+        elif self.change_x == PLAYER_RUNNING_SPEED and self.change_y == 0:
+            self.running = True
+        elif self.change_y != 0:
+            self.jumping = True
 
     def update_animation(self,delta_time: float = 1 / 60):
+        self.on_update()
+
         if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
             self.character_face_direction = LEFT_FACING
         elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
             self.character_face_direction = RIGHT_FACING
 
-        if self.change_x == 0 and self.change_y == 0 and not self.is_on_ladder:
+        if self.idle:
             self.cur_texture += 1
             if self.cur_texture >= 5 * UPDATE_PER_FRAME:
                 self.cur_texture = 0
@@ -141,10 +149,6 @@ class Player_Model(arcade.Sprite):
             frame = self.cur_texture // UPDATE_PER_FRAME
             direction = self.character_face_direction
             self.texture = self.jumping_texture[frame][direction]
-
-        
-        
-
 
 class BatEnemy(arcade.Sprite):
     def __init__(self):
