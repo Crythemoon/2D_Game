@@ -3,18 +3,18 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "untitled.tmx",
+    "activeFile": "testing_world.tmx",
     "expandedProjectPaths": [
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/setuptools",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/setuptools",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources",
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env",
         "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -175,12 +175,20 @@
         "level_1.tmx#tilemap_packed": {
             "scaleInDock": 1
         },
+        "testing_world.tmx": {
+            "scale": 0.5934567901234568,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 810.5055127938424,
+                "y": 540.8986894112752
+            }
+        },
         "untitled.tmx": {
             "scale": 0.43688271604938267,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 971.656658424585,
-                "y": 1807.1211586012012
+                "x": 753.0625220770046,
+                "y": 691.261038502296
             }
         }
     },
@@ -194,7 +202,7 @@
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/items.json",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap-characters_packed.tsx",
-        "untitled.tmx"
+        "testing_world.tmx"
     ],
     "project": "GUI_Camera.tiled-project",
     "property.type": "int",
@@ -203,14 +211,14 @@
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/items.json",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap_packed.tsx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/tiled_object/tilemap-characters_packed.tsx",
+        "testing_world.tmx",
         "untitled.tmx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/map_with_ladders.json",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_objects.json",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/level_1.json",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/game_object/kenney_pixel-platformer/Tiled/tilemap-example-a.tmx",
         "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_map_7.json",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_map_2.json",
-        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_map_3.json"
+        "C:/Users/cryth/OneDrive/Documents/GitHub/2D_Game/env/Lib/site-packages/arcade/resources/tiled_maps/test_map_2.json"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

@@ -24,8 +24,6 @@ class GameView(arcade.View):
     def __init__(self):
         super().__init__()
 
-        arcade.set_background_color(arcade.Color.WHITE)
-
         os.chdir(GAME_DIRECTORY)
 
         self.tile_map = None
@@ -83,9 +81,9 @@ class GameView(arcade.View):
         self.player_sprite_list.append(self.player_sprite)
 
         self.scene.add_sprite_list_after(
-            name = LAYER_NAME_PLAYER,
-            after = LAYER_NAME_PLATFORM,
-            sprite_list = self.player_sprite_list
+            name= LAYER_NAME_PLAYER,
+            after= LAYER_NAME_PLATFORM,
+            sprite_list= self.player_sprite_list
         )
 
         self.physics_engine = arcade.PhysicsEnginePlatformer(
@@ -93,3 +91,22 @@ class GameView(arcade.View):
             platforms = self.scene[LAYER_NAME_PLATFORM],
             gravity_constant = GRAVITY
         )
+    
+    def on_show_view(self):
+        self.setup()
+
+    def on_draw(self):
+        self.clear()
+        
+        self.scene.draw()
+
+        self.camera.use()
+
+def main():
+    window = arcade.Window(width=SCREEN_WIDTH,height=SCREEN_HEIGHT)
+    game = GameView()
+    window.show_view(game)
+    arcade.run()
+
+if __name__ == "__main__":
+    main()

@@ -36,8 +36,8 @@ PLAYER_CLIMBING_SPEED = 0.5
 PLAYER_JUMP_SPEED = 10
 PLAYER_DASH_SPEED = 10
 
-RIGHT = True
-LEFT = False
+RIGHT_FACING = 0
+LEFT_FACING = 1
 
 GRAVITY = 2
 
@@ -73,7 +73,6 @@ class GameView(arcade.View):
 
         self.player_sprite_list = None
         self.player_sprite = None
-        self.player_direction = RIGHT
 
         self.camera = None
         
@@ -91,8 +90,8 @@ class GameView(arcade.View):
         self.jump_needs_reset = False
         self.dash_needs_reset = False
 
-        self.time_since_last_dash = 0.0
-        self.time_between_dash = 4.0
+        self.time_between_dash = 0.0
+        self.dash_cooldown = 4.0
 
         self.time_since_last_attack = 0.0
         self.time_between_attack = 3.0
@@ -212,10 +211,12 @@ class GameView(arcade.View):
             self.player_sprite.change_x = player_speed
         elif not self.right_pressed and self.left_pressed:
             self.player_sprite.change_x = -player_speed
+        elif not self.right_pressed and not self.left_pressed:
+            self.player_sprite.change_x = 0
 
         if (                            #DASHING KEYCHANGE
             self.f_pressed
-            and self.player_direction == RIGHT
+            and self.player_sprite.character_face_direction == RIGHT_FACING
             and not self.dash_needs_reset
         ):
             self.player_sprite.center_x = self.player_sprite.center_x + PLAYER_DASH_SPEED
@@ -223,7 +224,7 @@ class GameView(arcade.View):
 
         if (
             self.f_pressed
-            and self.player_direction == LEFT
+            and self.player_sprite.character_face_direction == LEFT_FACING
             and not self.dash_needs_reset
         ):
             self.player_sprite.center_x = self.player_sprite.center_x - PLAYER_DASH_SPEED
@@ -296,13 +297,16 @@ class GameView(arcade.View):
 
         if self.physics_engine.is_on_ladder and not self.physics_engine.can_jump:
             self.player_sprite.is_on_ladder = True
+            self.process_keychange()
         else:
             self.player_sprite.is_on_ladder = False
+            self.process_keychange()
 
         if self.dash_needs_reset:
-            self.player_sprite.dashing = True
-        else:
-            self.player_sprite.dashing = False
+            self.time_between_dash += UPDATE_PER_FRAME
+            if self.time_between_dash == self.dash_cooldown:
+                self.time_between_dash = 0
+                self.dash_needs_reset = False
 
         self.scene.update_animation(                #SCENE ANIMATION UPDATE
             delta_time,
